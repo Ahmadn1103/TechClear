@@ -20,6 +20,11 @@ export default function Home() {
   const [formState, setFormState] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
+  const scrollTo = (id: string) => (e: React.MouseEvent) => {
+    e.preventDefault()
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   const handleWaitlistSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormState("loading");
@@ -60,28 +65,29 @@ export default function Home() {
               : "bg-transparent backdrop-blur-none border-transparent shadow-none"
           }`}
         >
-          <Link href="#hero" className="flex items-center" onClick={() => setMobileMenuOpen(false)}>
+          <a href="#hero" className="flex items-center" onClick={(e) => { scrollTo('hero')(e); setMobileMenuOpen(false) }}>
             <div className="relative w-14 h-14 md:w-20 md:h-20">
               <Image src="/assets/branding/1.png" alt="TechClear" fill sizes="80px" className="object-contain object-left" priority loading="eager" />
             </div>
-          </Link>
+          </a>
 
           {/* Desktop links */}
-          <div className="hidden md:flex gap-8 text-[11px] font-semibold tracking-[0.15em] uppercase text-zinc-200">
-            <Link href="#about" className="hover:text-white transition-colors">About Us</Link>
-            <Link href="#services" className="hover:text-white transition-colors">The Problem</Link>
-            <Link href="#bootcamp" className="hover:text-white transition-colors">Flagship Program</Link>
-            <Link href="#enroll" className="hover:text-white transition-colors">Enroll</Link>
-            <Link href="#waitlist" className="hover:text-white transition-colors">Contact</Link>
+          <div className="hidden md:flex gap-1 text-[11px] font-semibold tracking-[0.15em] uppercase text-zinc-200">
+            <a href="#about" onClick={scrollTo('about')} className="px-4 py-2 hover:bg-white hover:text-black transition-all duration-200">About Us</a>
+            <a href="#services" onClick={scrollTo('services')} className="px-4 py-2 hover:bg-white hover:text-black transition-all duration-200">The Problem</a>
+            <a href="#bootcamp" onClick={scrollTo('bootcamp')} className="px-4 py-2 hover:bg-white hover:text-black transition-all duration-200">Flagship Program</a>
+            <a href="#enroll" onClick={scrollTo('enroll')} className="px-4 py-2 hover:bg-white hover:text-black transition-all duration-200">Enroll</a>
+            <a href="#waitlist" onClick={scrollTo('waitlist')} className="px-4 py-2 hover:bg-white hover:text-black transition-all duration-200">Contact</a>
           </div>
 
           <div className="flex items-center gap-3">
-            <Link
+            <a
               href="#waitlist"
+              onClick={scrollTo('waitlist')}
               className="hidden md:block text-[11px] font-semibold tracking-[0.15em] uppercase border border-zinc-700 px-6 py-3 hover:bg-white hover:text-black hover:border-white transition-all duration-300 rounded-none"
             >
               Join Waitlist
-            </Link>
+            </a>
             {/* Hamburger */}
             <button
               className="md:hidden flex flex-col justify-center gap-[5px] p-2"
@@ -105,28 +111,28 @@ export default function Home() {
           >
             <div className="flex flex-col p-6 gap-1">
               {[
-                { href: "#about", label: "About Us" },
-                { href: "#services", label: "The Problem" },
-                { href: "#bootcamp", label: "Flagship Program" },
-                { href: "#enroll", label: "Enroll" },
-                { href: "#waitlist", label: "Contact" },
-              ].map(({ href, label }) => (
-                <Link
+                { href: "#about", id: "about", label: "About Us" },
+                { href: "#services", id: "services", label: "The Problem" },
+                { href: "#bootcamp", id: "bootcamp", label: "Flagship Program" },
+                { href: "#enroll", id: "enroll", label: "Enroll" },
+                { href: "#waitlist", id: "waitlist", label: "Contact" },
+              ].map(({ href, id, label }) => (
+                <a
                   key={href}
                   href={href}
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={(e) => { scrollTo(id)(e); setMobileMenuOpen(false) }}
                   className="text-[13px] font-semibold tracking-[0.15em] uppercase text-zinc-300 hover:text-white transition-colors py-4 border-b border-white/5 last:border-0"
                 >
                   {label}
-                </Link>
+                </a>
               ))}
-              <Link
+              <a
                 href="#waitlist"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => { scrollTo('waitlist')(e); setMobileMenuOpen(false) }}
                 className="mt-4 text-center text-[11px] font-bold tracking-[0.15em] uppercase border border-white/30 px-6 py-4 text-white hover:bg-white hover:text-black transition-all duration-300"
               >
                 Join Waitlist
-              </Link>
+              </a>
             </div>
           </motion.div>
         )}
@@ -211,27 +217,30 @@ export default function Home() {
             transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-start flex-wrap"
           >
-            <Link
+            <a
               href="#bootcamp"
+              onClick={scrollTo('bootcamp')}
               className="group flex items-center justify-between sm:justify-start gap-3 bg-white text-black px-7 py-4 md:px-10 md:py-5 font-bold text-[12px] md:text-[13px] tracking-[0.15em] uppercase hover:bg-zinc-200 transition-colors rounded-none"
             >
               Flagship Program
               <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <Link
+            </a>
+            <a
               href="#enroll"
+              onClick={scrollTo('enroll')}
               className="group flex items-center justify-between sm:justify-start gap-3 border border-white px-7 py-4 md:px-10 md:py-5 font-bold text-[12px] md:text-[13px] tracking-[0.15em] uppercase text-white hover:bg-white hover:text-black transition-all duration-300 rounded-none"
             >
               Enroll
               <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <Link
+            </a>
+            <a
               href="#waitlist"
+              onClick={scrollTo('waitlist')}
               className="group flex items-center justify-between sm:justify-start gap-3 border border-white/40 px-7 py-4 md:px-10 md:py-5 font-bold text-[12px] md:text-[13px] tracking-[0.15em] uppercase text-zinc-400 hover:border-white hover:text-white transition-all duration-300 rounded-none"
             >
               Contact
               <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            </a>
           </motion.div>
         </div>
       </section>
@@ -857,11 +866,11 @@ export default function Home() {
           <p className="text-[11px] font-semibold tracking-[0.15em] uppercase text-white">© 2026 TechClear. Built for the world.</p>
         </div>
         <nav aria-label="Footer navigation" className="flex flex-row flex-wrap gap-x-8 gap-y-4 md:gap-16 text-[11px] font-semibold tracking-[0.15em] uppercase text-zinc-400">
-          <Link href="#about" className="hover:text-white transition-colors">About Us</Link>
-          <Link href="#services" className="hover:text-white transition-colors">The Problem</Link>
-          <Link href="#bootcamp" className="hover:text-white transition-colors">Flagship Program</Link>
-          <Link href="#enroll" className="hover:text-white transition-colors">Enroll</Link>
-          <Link href="#waitlist" className="hover:text-white transition-colors">Contact</Link>
+          <a href="#about" onClick={scrollTo('about')} className="hover:text-white transition-colors">About Us</a>
+          <a href="#services" onClick={scrollTo('services')} className="hover:text-white transition-colors">The Problem</a>
+          <a href="#bootcamp" onClick={scrollTo('bootcamp')} className="hover:text-white transition-colors">Flagship Program</a>
+          <a href="#enroll" onClick={scrollTo('enroll')} className="hover:text-white transition-colors">Enroll</a>
+          <a href="#waitlist" onClick={scrollTo('waitlist')} className="hover:text-white transition-colors">Contact</a>
         </nav>
       </footer>
     </main>
