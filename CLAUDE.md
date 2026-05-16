@@ -50,10 +50,10 @@ Every intake form submission creates or updates a contact in HubSpot automatical
 - After Stripe payment: lifecycle upgrades to **customer** via webhook + note added with payment details
 - Env var: `HUBSPOT_ACCESS_TOKEN`
 
-### Resend Email — CODE COMPLETE, DOMAIN PENDING ⚠️
-All email sending logic is implemented and tested.
+### Resend Email — FULLY CONNECTED ✅
+All email sending logic is implemented, tested, and live. Custom domain `techclear.org` is verified and sending from `contact@techclear.org`.
 
-**Blocker:** Resend custom domain verification for `techclear.org` is still propagating. Emails fall back to `onboarding@resend.dev` until verified. Monitor at resend.com/domains and update `RESEND_FROM_EMAIL` once cleared.
+> Previously blocked by a Gmail/Google Workspace DNS conflict — resolved by correcting the DNS records on the Gmail side.
 
 - `lib/resend.ts` — `sendWaitlistConfirmation()`, `sendEnrollmentReceipt(email, firstName, amountPaid)`, `sendEnrollmentNotification(data)`, `sendWaitlistNotification()`, `sendContactNotification()`
 - `lib/mailer.ts` — `sendInternalNotification({ firstName, lastName, fullName, email, phone, interest })` — internal team email showing full name
@@ -80,7 +80,7 @@ STRIPE_WEBHOOK_SECRET=
 # HubSpot (CONNECTED)
 HUBSPOT_ACCESS_TOKEN=
 
-# Resend (CONNECTED — domain verification pending)
+# Resend (CONNECTED)
 RESEND_API_KEY=
 RESEND_FROM_EMAIL=contact@techclear.org
 ```
@@ -143,16 +143,14 @@ All fields are sent to HubSpot and included in internal notification emails (ful
 
 ## Blockers Summary
 
-| Blocker | Owner | Status |
-|---------|-------|--------|
-| Resend domain verification (`techclear.org`) | DNS propagation | Pending — monitor resend.com/domains |
+_No active blockers._
 
 | Integration | Status |
 |------------|--------|
 | HubSpot CRM | Fully connected — all form submissions create/update contacts with first + last name |
 | Stripe Payment Link | Live — `buy.stripe.com/6oU14mgs2bIogALaim7wA01` with promo codes enabled |
 | Stripe Webhook | Captures email, phone, name, product, amount — updates HubSpot + sends emails |
-| Email sending (fallback domain) | Working via `onboarding@resend.dev` until domain clears |
+| Resend Email | Live — sending from `contact@techclear.org` (domain verified) |
 
 ---
 
@@ -162,5 +160,6 @@ All fields are sent to HubSpot and included in internal notification emails (ful
 |-------|------------|
 | Double Animation Firing | Fixed by implementing a `mounted` state guard and increasing `viewport.amount` to `0.2` for all scroll-triggered elements. This prevents hydration and layout shifts from re-triggering entrance animations on mobile. |
 | Strict Mode Remounting | Disabled `reactStrictMode` in `next.config.ts` to prevent double-rendering in development. |
+| Resend Domain Verification | Root cause was a Gmail/Google Workspace DNS conflict on `techclear.org`. Resolved by correcting the DNS records on the Gmail side; domain is now verified and sending from `contact@techclear.org`. |
 
 
