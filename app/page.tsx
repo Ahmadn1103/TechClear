@@ -681,7 +681,7 @@ export default function Home() {
                 level="M"
               />
             </div>
-            <p className="text-white/40 text-xs tracking-widest uppercase text-center">
+            <p className="text-white text-sm font-semibold tracking-widest uppercase text-center">
               techclear.org/#waitlist
             </p>
           </div>
