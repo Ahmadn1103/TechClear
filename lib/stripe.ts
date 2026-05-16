@@ -13,6 +13,7 @@ export async function createCheckoutSession(data: {
       cancel_url: data.cancelUrl,
       billing_address_collection: 'auto',
       phone_number_collection: { enabled: true },
+      allow_promotion_codes: true,
       line_items: [
         {
           price: 'price_1TXYWPA9IeySagbTgceBL7SL',
