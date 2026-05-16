@@ -271,7 +271,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: "some" }}
             transition={{ duration: 0.8 }}
           >
             <span className="inline-block border border-white/30 text-sm md:text-base font-bold tracking-[0.2em] uppercase px-5 py-2 mb-8 text-zinc-200">
@@ -286,7 +286,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: "some" }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <span className="inline-block border border-white/30 text-sm md:text-base font-bold tracking-[0.2em] uppercase px-5 py-2 mb-8 text-zinc-200">
@@ -301,7 +301,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: "some" }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <span className="inline-block border border-white/30 text-sm md:text-base font-bold tracking-[0.2em] uppercase px-5 py-2 mb-8 text-zinc-200">
@@ -336,7 +336,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-100px", amount: "some" }}
             transition={{ duration: 0.8 }}
             className="md:col-span-5"
           >
@@ -356,7 +356,7 @@ export default function Home() {
                   key={i}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: true, amount: "some" }}
                   transition={{ duration: 0.6, delay: i * 0.15 }}
                   className="flex gap-6 items-start group p-6 md:p-8 bg-white/[0.02] border border-white/10 hover:bg-white/[0.05] hover:border-white/30 transition-all duration-500"
                 >
@@ -374,7 +374,7 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: "some" }}
               transition={{ duration: 1, delay: 0.4 }}
               className="mt-12 relative w-full h-[250px] grayscale hover:grayscale-0 transition-all duration-1000 ease-in-out border border-white/10 group overflow-hidden"
             >
@@ -392,7 +392,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-100px", amount: "some" }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="md:col-span-7 md:pl-16 border-t md:border-t-0 md:border-l border-white/10 pt-16 md:pt-0"
           >
@@ -411,7 +411,7 @@ export default function Home() {
                   key={i}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: true, amount: "some" }}
                   transition={{ duration: 0.6, delay: 0.3 + (i * 0.1) }}
                   className="p-8 bg-gradient-to-b from-white/5 to-transparent border border-white/10 hover:border-white/30 transition-all duration-500 group"
                 >
@@ -428,7 +428,7 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: "some" }}
               transition={{ duration: 0.8, delay: 0.4 }}
               className="mt-12 relative w-full h-[250px] grayscale hover:grayscale-0 transition-all duration-1000 ease-in-out border border-white/10 group overflow-hidden hidden md:block"
             >
@@ -478,7 +478,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-100px", amount: "some" }}
             transition={{ duration: 0.8 }}
             className="md:col-span-5"
           >
@@ -496,7 +496,7 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: "some" }}
               transition={{ duration: 0.8, delay: 0.2 }}
               className="relative w-full h-[300px] md:h-[400px] grayscale hover:grayscale-0 transition-all duration-1000 ease-in-out border border-white/10 mt-8 group overflow-hidden"
             >
@@ -522,7 +522,7 @@ export default function Home() {
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
+                viewport={{ once: true, margin: "-50px", amount: "some" }}
                 transition={{ duration: 0.6, delay: i * 0.1 }}
                 className="bg-[#0a0a0a] p-8 md:p-10 border border-white/10 hover:border-white/30 transition-all duration-300 group rounded-none h-fit cursor-none"
               >
@@ -534,7 +534,7 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: "some" }}
               transition={{ duration: 0.8, delay: 0.4 }}
               className="col-span-1 sm:col-span-2 relative w-full h-[200px] mt-2 grayscale hover:grayscale-0 transition-all duration-1000 ease-in-out border border-white/10 group overflow-hidden hidden md:block"
             >
@@ -720,7 +720,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-100px", amount: "some" }}
             transition={{ duration: 0.8 }}
           >
             <span className="inline-block border border-white/30 text-sm md:text-base font-bold tracking-[0.2em] uppercase px-5 py-2 mb-8 text-zinc-200">
@@ -752,7 +752,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-100px", amount: "some" }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             {formState === "success" ? (
