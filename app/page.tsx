@@ -232,14 +232,12 @@ export default function Home() {
               Flagship Program
               <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
             </a>
-            <a
-              href="#enroll"
-              onClick={scrollTo('enroll')}
-              className="group flex items-center justify-between sm:justify-start gap-3 border border-white px-7 py-4 md:px-10 md:py-5 font-bold text-[12px] md:text-[13px] tracking-[0.15em] uppercase text-white hover:bg-white hover:text-black transition-all duration-300 rounded-none"
+            <span
+              aria-disabled="true"
+              className="flex items-center justify-between sm:justify-start gap-3 border border-white/40 px-7 py-4 md:px-10 md:py-5 font-bold text-[12px] md:text-[13px] tracking-[0.15em] uppercase text-zinc-400 cursor-not-allowed rounded-none"
             >
-              Enroll
-              <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
-            </a>
+              Enroll — Coming Soon
+            </span>
             <a
               href="#waitlist"
               onClick={scrollTo('waitlist')}
