@@ -719,6 +719,21 @@ export default function Home() {
             <p className="text-lg md:text-2xl text-zinc-400 font-light mb-10 md:mb-12 max-w-lg leading-relaxed">
               We exist for the driven professionals who believe a better career path is possible. Join the waitlist for our upcoming Flagship Program.
             </p>
+
+            <div className="flex items-center gap-6">
+              <div className="p-4 bg-white shrink-0" style={{ lineHeight: 0 }}>
+                <QRCodeSVG
+                  value="https://www.techclear.org/#waitlist"
+                  size={100}
+                  bgColor="#ffffff"
+                  fgColor="#000000"
+                  level="M"
+                />
+              </div>
+              <p className="text-white/40 text-xs tracking-widest uppercase leading-relaxed">
+                Scan to join<br />the waitlist
+              </p>
+            </div>
           </motion.div>
 
           <motion.div
