@@ -33,10 +33,6 @@ export async function sendWaitlistConfirmation(to: string, firstName: string, in
             <br />
             <p>Talk soon,</p>
             <p><strong>The TechClear Team</strong></p>
-            <hr style="border:none; border-top:1px solid #eee; margin: 30px 0;" />
-            <p style="font-size:11px; color:#999;">
-              <a href="https://app.hubspot.com/contacts" style="color:#999;">View contact in HubSpot →</a>
-            </p>
           </body>
         </html>
       `,
