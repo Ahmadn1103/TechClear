@@ -1,11 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { usePathname } from 'next/navigation'
 import { motion, useSpring, useMotionValue } from 'framer-motion'
 
 export default function CustomCursor() {
-  const pathname = usePathname()
   const [mounted, setMounted] = useState(false)
   const [isTouch, setIsTouch] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
@@ -42,21 +40,26 @@ export default function CustomCursor() {
 
     const handleMouseLeave = () => setIsVisible(false)
     const handleMouseEnter = () => setIsVisible(true)
+    const handlePageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) setIsVisible(false)
+    }
 
     window.addEventListener('mousemove', moveCursor)
     window.addEventListener('mouseover', handleMouseOver)
+    window.addEventListener('pageshow', handlePageShow)
     document.documentElement.addEventListener('mouseleave', handleMouseLeave)
     document.documentElement.addEventListener('mouseenter', handleMouseEnter)
 
     return () => {
       window.removeEventListener('mousemove', moveCursor)
       window.removeEventListener('mouseover', handleMouseOver)
+      window.removeEventListener('pageshow', handlePageShow)
       document.documentElement.removeEventListener('mouseleave', handleMouseLeave)
       document.documentElement.removeEventListener('mouseenter', handleMouseEnter)
     }
   }, [mounted, isTouch, cursorX, cursorY])
 
-  if (!mounted || isTouch || pathname === '/register') return null
+  if (!mounted || isTouch) return null
 
   return (
     <>

@@ -62,6 +62,16 @@
   body, a, button {
     cursor: none !important;
   }
+
+  /* Pages that opt out of the custom cursor use this class */
+  .no-custom-cursor,
+  .no-custom-cursor * {
+    cursor: auto !important;
+  }
+  .no-custom-cursor a,
+  .no-custom-cursor button {
+    cursor: pointer !important;
+  }
 }
 
 /* Text Selection Highlighting */

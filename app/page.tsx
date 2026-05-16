@@ -14,6 +14,7 @@ export default function Home() {
 
   // Waitlist form state
   const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [interest, setInterest] = useState("");
@@ -33,7 +34,7 @@ export default function Home() {
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ firstName, email, phone, interest }),
+        body: JSON.stringify({ firstName, lastName, email, phone, interest }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -59,24 +60,24 @@ export default function Home() {
       {/* Navigation */}
       <header className="fixed top-0 w-full z-50 flex flex-col items-center pointer-events-none">
         <nav
-          className={`pointer-events-auto transition-all duration-1000 ease-in-out flex justify-between items-center mt-4 w-[calc(100%-2rem)] max-w-[1400px] px-5 md:px-8 py-2 md:py-3 rounded-2xl border ${
-            isScrolled || mobileMenuOpen
-              ? "bg-[#050505]/90 backdrop-blur-xl border-white/10 shadow-2xl"
-              : "bg-transparent backdrop-blur-none border-transparent shadow-none"
-          }`}
+          className={`pointer-events-auto transition-all duration-1000 ease-in-out flex justify-between items-center mt-4 w-[calc(100%-2rem)] max-w-[1400px] px-5 md:px-8 py-2 md:py-3 rounded-2xl border ${isScrolled || mobileMenuOpen
+            ? "bg-[#050505]/90 backdrop-blur-xl border-white/10 shadow-2xl"
+            : "bg-transparent backdrop-blur-none border-transparent shadow-none"
+            }`}
         >
           <a href="#hero" className="flex items-center" onClick={(e) => { scrollTo('hero')(e); setMobileMenuOpen(false) }}>
-            <div className="relative w-14 h-14 md:w-20 md:h-20">
-              <Image src="/assets/branding/1.png" alt="TechClear" fill sizes="80px" className="object-contain object-left" priority loading="eager" />
+            <div className="relative w-12 h-12 md:w-14 md:h-14 overflow-hidden">
+              <Image src="/assets/branding/1.png" alt="TechClear" fill sizes="56px" className="object-cover object-center scale-[1.15]" priority loading="eager" />
             </div>
           </a>
 
           {/* Desktop links */}
-          <div className="hidden md:flex gap-1 text-[11px] font-semibold tracking-[0.15em] uppercase text-zinc-200">
+          <div className={`hidden md:flex gap-1 text-[11px] font-semibold tracking-[0.15em] uppercase text-zinc-200`}>
             <a href="#about" onClick={scrollTo('about')} className="px-4 py-2 hover:bg-white hover:text-black transition-all duration-200">About Us</a>
-            <a href="#services" onClick={scrollTo('services')} className="px-4 py-2 hover:bg-white hover:text-black transition-all duration-200">The Problem</a>
+            <a href="#services" onClick={scrollTo('services')} className="px-4 py-2 hover:bg-white hover:text-black transition-all duration-200">Our Solution</a>
             <a href="#bootcamp" onClick={scrollTo('bootcamp')} className="px-4 py-2 hover:bg-white hover:text-black transition-all duration-200">Flagship Program</a>
-            <a href="#enroll" onClick={scrollTo('enroll')} className="px-4 py-2 hover:bg-white hover:text-black transition-all duration-200">Enroll</a>
+            {/* ENROLL NAV LINK — hidden, restore by removing the false && */}
+            {false && <a href="#enroll" onClick={scrollTo('enroll')} className="px-4 py-2 hover:bg-white hover:text-black transition-all duration-200">Enroll</a>}
             <a href="#waitlist" onClick={scrollTo('waitlist')} className="px-4 py-2 hover:bg-white hover:text-black transition-all duration-200">Contact</a>
           </div>
 
@@ -84,7 +85,7 @@ export default function Home() {
             <a
               href="#waitlist"
               onClick={scrollTo('waitlist')}
-              className="hidden md:block text-[11px] font-semibold tracking-[0.15em] uppercase border border-zinc-700 px-6 py-3 hover:bg-white hover:text-black hover:border-white transition-all duration-300 rounded-none"
+              className={`hidden md:block text-[11px] font-semibold tracking-[0.15em] uppercase border border-zinc-700 px-6 py-3 hover:bg-white hover:text-black hover:border-white transition-all duration-300 rounded-none`}
             >
               Join Waitlist
             </a>
@@ -112,9 +113,10 @@ export default function Home() {
             <div className="flex flex-col p-6 gap-1">
               {[
                 { href: "#about", id: "about", label: "About Us" },
-                { href: "#services", id: "services", label: "The Problem" },
+                { href: "#services", id: "services", label: "Our Solution" },
                 { href: "#bootcamp", id: "bootcamp", label: "Flagship Program" },
-                { href: "#enroll", id: "enroll", label: "Enroll" },
+                // ENROLL MOBILE NAV — hidden, restore by uncommenting:
+                // { href: "#enroll", id: "enroll", label: "Enroll" },
                 { href: "#waitlist", id: "waitlist", label: "Contact" },
               ].map(({ href, id, label }) => (
                 <a
@@ -178,7 +180,7 @@ export default function Home() {
         />
 
         <div className="max-w-5xl relative z-10 transform-style-3d">
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: -20, filter: "blur(10px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
@@ -186,8 +188,8 @@ export default function Home() {
           >
             IT Workforce Training
           </motion.p>
-          
-          <motion.h1 
+
+          <motion.h1
             initial={{ opacity: 0, rotateX: 45, y: 100, scale: 0.9, filter: "blur(20px)" }}
             animate={{ opacity: 1, rotateX: 0, y: 0, scale: 1, filter: "blur(0px)" }}
             transition={{ duration: 1.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
@@ -195,8 +197,8 @@ export default function Home() {
           >
             Build with <span className="italic text-zinc-300">intention</span>.<br />Advance the <span className="italic text-zinc-300">tech future</span>.
           </motion.h1>
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, rotateY: 30, x: -50, z: -100, filter: "blur(15px)" }}
             animate={{ opacity: 1, rotateY: 0, x: 0, z: 0, filter: "blur(0px)" }}
             transition={{ duration: 1.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
@@ -205,13 +207,13 @@ export default function Home() {
             {/* Subtle background glow */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 ease-out" />
             <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-[50px] -translate-y-1/2 translate-x-1/2 opacity-50 group-hover:opacity-100 transition-opacity duration-1000" />
-            
+
             <p className="text-xl md:text-2xl text-zinc-200 font-light leading-relaxed relative z-10">
               TechClear equips <span className="text-white font-normal">driven professionals</span> — managers, engineers, and innovators — with the <span className="text-white font-normal">skills, certifications, and mentorship</span> to create <span className="font-playfair italic text-white text-2xl md:text-3xl">impact</span> in a rapidly evolving tech landscape.
             </p>
           </motion.div>
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -249,7 +251,7 @@ export default function Home() {
       <section id="about" className="px-6 md:px-16 py-16 md:py-32 bg-[#050505] text-white relative overflow-hidden">
         {/* Animated Hexagon Pattern */}
         <div className="absolute inset-0 z-0 opacity-[0.05] pointer-events-none">
-          <motion.svg 
+          <motion.svg
             width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
             animate={{ x: [0, -60], y: [0, -35] }}
             transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
@@ -266,7 +268,7 @@ export default function Home() {
 
         <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 relative z-10">
           {/* About Us */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -281,7 +283,7 @@ export default function Home() {
           </motion.div>
 
           {/* Mission */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -291,12 +293,12 @@ export default function Home() {
               Our Mission
             </span>
             <p className="text-lg font-light leading-relaxed text-zinc-300">
-              We aim to equip our students with the skills to excel in Agile management. Explore our rigorous flagship program, designed specifically to integrate SAFe principles with cutting-edge AI tools to shape indispensable leaders.
+              We aim to equip IT professionals with the skills to lead in an AI-driven world. Our flagship program bridges the gap between technical expertise and modern project leadership.
             </p>
           </motion.div>
 
           {/* Vision */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -312,11 +314,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Philosophy / The Problem Section */}
+      {/* Philosophy / Our Solution Section */}
       <section id="services" className="px-6 md:px-16 py-20 md:py-40 bg-[#020202] border-b border-white/10 relative overflow-hidden">
         {/* Animated Blueprint Grid Background */}
         <div className="absolute inset-0 z-0 opacity-[0.08] pointer-events-none">
-          <motion.svg 
+          <motion.svg
             width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
             animate={{ x: [0, -40], y: [0, -40] }}
             transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
@@ -331,7 +333,7 @@ export default function Home() {
         </div>
 
         <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-24 relative z-10">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -339,7 +341,7 @@ export default function Home() {
             className="md:col-span-5"
           >
             <span className="inline-block border border-white/30 text-sm md:text-base font-bold tracking-[0.2em] uppercase px-5 py-2 mb-8 text-zinc-200">
-              The Problem
+              Our Solution
             </span>
             <h3 className="font-playfair text-3xl md:text-6xl leading-tight mb-8">
               The tech industry is evolving at <span className="italic">breakneck speed</span>.
@@ -350,8 +352,8 @@ export default function Home() {
                 "Professionals struggle to bridge the gap between technical skills and leadership.",
                 "Navigating the transition requires more than just self-study; it requires a community."
               ].map((text, i) => (
-                <motion.div 
-                  key={i} 
+                <motion.div
+                  key={i}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
@@ -359,7 +361,7 @@ export default function Home() {
                   className="flex gap-6 items-start group p-6 md:p-8 bg-white/[0.02] border border-white/10 hover:bg-white/[0.05] hover:border-white/30 transition-all duration-500"
                 >
                   <div className="w-14 h-14 flex items-center justify-center border border-white/20 bg-black shrink-0 shadow-lg group-hover:border-white transition-colors duration-500">
-                    <span className="font-playfair italic text-white text-xl mt-1">0{i+1}</span>
+                    <span className="font-playfair italic text-white text-xl mt-1">0{i + 1}</span>
                   </div>
                   <p className="text-zinc-200 text-lg md:text-xl font-light leading-relaxed pt-2">
                     {text}
@@ -369,7 +371,7 @@ export default function Home() {
             </div>
 
             {/* New Problem/Context Image */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -387,7 +389,7 @@ export default function Home() {
             </motion.div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -405,8 +407,8 @@ export default function Home() {
                 { title: "1-on-1 Coaching", desc: "Personalized guidance from seasoned enterprise IT leaders." },
                 { title: "AI Integration", desc: "Practical AI skills to elevate your project management capabilities." }
               ].map((item, i) => (
-                <motion.div 
-                  key={i} 
+                <motion.div
+                  key={i}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -423,7 +425,7 @@ export default function Home() {
               ))}
             </div>
             {/* Added Placeholder Image to balance the layout */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -487,11 +489,11 @@ export default function Home() {
               PM + AI <br /><span className="italic">Flagship Program</span>
             </h2>
             <p className="text-xl text-zinc-200 font-light mb-12 leading-relaxed">
-              An intensive 8-week program combining SAFe Scrum Master 6.0 principles with cutting-edge AI tools to make you an indispensable IT leader.
+              An intensive 8-week program combining SAFe Scrum Master 6.0 certification with hands-on AI integration — built for IT professionals ready to step into leadership.
             </p>
-            
+
             {/* Immersive Bootcamp Image */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -516,7 +518,7 @@ export default function Home() {
               { title: "Flexible Delivery", desc: "Available virtually, in-person, or via 1-on-1 coaching." },
               { title: "Career Growth", desc: "Position yourself at the forefront of the AI-driven tech economy." }
             ].map((item, i) => (
-              <motion.div 
+              <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -529,7 +531,7 @@ export default function Home() {
               </motion.div>
             ))}
             {/* Added Placeholder Image to balance the layout */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -550,8 +552,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Enroll & Pay Section */}
-      <section id="enroll" className="px-6 md:px-16 py-20 md:py-40 bg-[#050505] text-white border-b border-white/10 relative overflow-hidden">
+      {/* ENROLL SECTION — change false to true to restore */}
+      {false && <section id="enroll" className="px-6 md:px-16 py-20 md:py-40 bg-[#050505] text-white border-b border-white/10 relative overflow-hidden">
         {/* Animated diagonal grid */}
         <div className="absolute inset-0 z-0 opacity-[0.06] pointer-events-none">
           <motion.svg
@@ -617,9 +619,11 @@ export default function Home() {
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-12">
               <div>
-                <span className="text-sm font-bold tracking-[0.2em] uppercase text-zinc-300 mb-6 block">One-Time Payment</span>
-                <p className="font-playfair text-5xl md:text-8xl text-white mb-3 leading-none">$3,000</p>
-                <p className="text-zinc-200 text-lg md:text-xl font-semibold tracking-wide mt-2">Full access. No installments. No hidden fees.</p>
+                <p className="text-sm font-bold tracking-[0.2em] uppercase text-zinc-400 mb-4">PM + AI Flagship Program</p>
+                <h3 className="font-playfair text-4xl md:text-6xl text-white leading-tight mb-4">
+                  8 weeks.<br /><span className="italic">One decision.</span>
+                </h3>
+                <p className="text-zinc-400 text-lg font-light">Enroll to view pricing and secure your spot.</p>
               </div>
               <ul className="space-y-4 md:max-w-xs">
                 {["Full 8-week program access", "SAFe SSM 6.0 certification included", "1-on-1 coaching sessions", "Priority support"].map((point) => (
@@ -651,7 +655,7 @@ export default function Home() {
             Secure payment. All major cards accepted.
           </motion.p>
         </div>
-      </section>
+      </section>}
 
       {/* QR Code — Early Access */}
       <section className="px-6 md:px-16 py-20 md:py-32 bg-[#020202] border-b border-white/10 text-white">
@@ -760,7 +764,7 @@ export default function Home() {
               >
                 <div className="w-14 h-14 border border-white/30 flex items-center justify-center shrink-0">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 13l4 4L19 7" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M5 13l4 4L19 7" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
                 <div>
@@ -771,7 +775,7 @@ export default function Home() {
                   </p>
                 </div>
                 <button
-                  onClick={() => { setFormState("idle"); setFirstName(""); setEmail(""); setPhone(""); setInterest(""); }}
+                  onClick={() => { setFormState("idle"); setFirstName(""); setLastName(""); setEmail(""); setPhone(""); setInterest(""); }}
                   className="text-[11px] font-bold tracking-[0.15em] uppercase border border-white/20 px-6 py-3 text-zinc-400 hover:border-white hover:text-white transition-all duration-300 w-fit"
                 >
                   Submit another response
@@ -779,17 +783,30 @@ export default function Home() {
               </motion.div>
             ) : (
               <form className="space-y-6" onSubmit={handleWaitlistSubmit}>
-                <div>
-                  <label className="inline-block border border-white/30 text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1.5 mb-3 text-zinc-300" htmlFor="wl-name">First Name</label>
-                  <input
-                    type="text"
-                    id="wl-name"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent transition-all font-light text-lg rounded-none text-white cursor-none"
-                    required
-                    disabled={formState === "loading"}
-                  />
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="inline-block border border-white/30 text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1.5 mb-3 text-zinc-300" htmlFor="wl-firstname">First Name</label>
+                    <input
+                      type="text"
+                      id="wl-firstname"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent transition-all font-light text-lg rounded-none text-white cursor-none"
+                      required
+                      disabled={formState === "loading"}
+                    />
+                  </div>
+                  <div>
+                    <label className="inline-block border border-white/30 text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1.5 mb-3 text-zinc-300" htmlFor="wl-lastname">Last Name</label>
+                    <input
+                      type="text"
+                      id="wl-lastname"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent transition-all font-light text-lg rounded-none text-white cursor-none"
+                      disabled={formState === "loading"}
+                    />
+                  </div>
                 </div>
                 <div>
                   <label className="inline-block border border-white/30 text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1.5 mb-3 text-zinc-300" htmlFor="wl-email">Email Address</label>
@@ -826,11 +843,10 @@ export default function Home() {
                   >
                     <option value="" disabled className="text-zinc-500">Select Area of Interest</option>
                     <option value="bootcamp">PM + AI Flagship Program</option>
-                    <option value="general">General Updates</option>
                   </select>
                   <div className="absolute right-6 top-[55%] pointer-events-none text-zinc-400">
                     <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </div>
                 </div>
@@ -859,19 +875,35 @@ export default function Home() {
       <footer className="px-6 md:px-16 py-10 md:py-16 bg-black border-t border-white/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 md:gap-12">
         <div className="flex flex-col gap-4">
           <div className="flex items-center">
-            <div className="relative w-16 h-16 md:w-20 md:h-20">
-              <Image src="/assets/branding/1.png" alt="TechClear" fill sizes="80px" className="object-contain object-left" />
+            <div className="relative w-12 h-12 md:w-14 md:h-14 overflow-hidden">
+              <Image src="/assets/branding/1.png" alt="TechClear" fill sizes="56px" className="object-cover object-center scale-[1.15]" />
             </div>
           </div>
           <p className="text-[11px] font-semibold tracking-[0.15em] uppercase text-white">© 2026 TechClear. Built for the world.</p>
         </div>
-        <nav aria-label="Footer navigation" className="flex flex-row flex-wrap gap-x-8 gap-y-4 md:gap-16 text-[11px] font-semibold tracking-[0.15em] uppercase text-zinc-400">
-          <a href="#about" onClick={scrollTo('about')} className="hover:text-white transition-colors">About Us</a>
-          <a href="#services" onClick={scrollTo('services')} className="hover:text-white transition-colors">The Problem</a>
-          <a href="#bootcamp" onClick={scrollTo('bootcamp')} className="hover:text-white transition-colors">Flagship Program</a>
-          <a href="#enroll" onClick={scrollTo('enroll')} className="hover:text-white transition-colors">Enroll</a>
-          <a href="#waitlist" onClick={scrollTo('waitlist')} className="hover:text-white transition-colors">Contact</a>
-        </nav>
+        <div className="flex flex-col gap-6">
+          <nav aria-label="Footer navigation" className="flex flex-row flex-wrap gap-x-8 gap-y-4 md:gap-16 text-[11px] font-semibold tracking-[0.15em] uppercase text-zinc-400">
+            <a href="#about" onClick={scrollTo('about')} className="hover:text-white transition-colors">About Us</a>
+            <a href="#services" onClick={scrollTo('services')} className="hover:text-white transition-colors">Our Solution</a>
+            <a href="#bootcamp" onClick={scrollTo('bootcamp')} className="hover:text-white transition-colors">Flagship Program</a>
+            {/* ENROLL FOOTER LINK — hidden, restore by removing the false && */}
+            {false && <a href="#enroll" onClick={scrollTo('enroll')} className="hover:text-white transition-colors">Enroll</a>}
+            <a href="#waitlist" onClick={scrollTo('waitlist')} className="hover:text-white transition-colors">Contact</a>
+          </nav>
+          <a
+            href="https://www.instagram.com/techclear.co"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors w-fit"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
+            </svg>
+            <span className="text-[11px] font-semibold tracking-[0.15em] uppercase">@Techclear.co</span>
+          </a>
+        </div>
       </footer>
     </main>
   );

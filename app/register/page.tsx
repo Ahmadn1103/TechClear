@@ -5,7 +5,7 @@ const PAYMENT_LINK = 'https://buy.stripe.com/6oU14mgs2bIogALaim7wA01'
 
 export default function RegisterPage() {
   return (
-    <main className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-6 cursor-auto">
+    <main className="no-custom-cursor min-h-screen bg-black text-white flex flex-col items-center justify-center px-6">
       <div className="w-full max-w-lg">
         <Link
           href="/"
