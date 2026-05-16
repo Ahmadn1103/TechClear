@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import CustomCursor from "@/components/CustomCursor";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
@@ -98,7 +99,8 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.variable} ${playfair.variable} font-sans bg-black text-[#f4f4f5] antialiased`}>
+      <body className={`${inter.variable} ${playfair.variable} font-sans bg-black text-[#f4f4f5] antialiased cursor-none`}>
+        <CustomCursor />
         {children}
       </body>
     </html>

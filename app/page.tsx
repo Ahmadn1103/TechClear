@@ -715,7 +715,7 @@ export default function Home() {
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-12">
               <div>
-                <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 mb-6 block">One-Time Payment</span>
+                <span className="text-sm font-bold tracking-[0.2em] uppercase text-zinc-300 mb-6 block">One-Time Payment</span>
                 <p className="font-playfair text-5xl md:text-8xl text-white mb-3 leading-none">$3,000</p>
                 <p className="text-zinc-200 text-lg md:text-xl font-semibold tracking-wide mt-2">Full access. No installments. No hidden fees.</p>
               </div>
@@ -730,7 +730,7 @@ export default function Home() {
             </div>
             <div className="mt-12">
               <Link
-                href="#waitlist"
+                href="/register"
                 className="inline-flex items-center gap-3 bg-white text-black px-10 py-5 font-bold text-[12px] tracking-[0.15em] uppercase hover:bg-zinc-200 transition-colors group/btn rounded-none"
               >
                 <span>Enroll Now</span>

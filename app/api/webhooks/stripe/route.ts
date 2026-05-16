@@ -21,20 +21,18 @@ export async function POST(req: NextRequest) {
     const session = event.data.object as Stripe.Checkout.Session
     const meta = session.metadata || {}
 
+    const email = session.customer_email || session.customer_details?.email || ''
+    const firstName = session.customer_details?.name?.split(' ')[0] || ''
+
     try {
       await createOrUpdateContact({
-        email: session.customer_email!,
-        firstName: meta.firstName,
+        email,
+        firstName,
         lifecyclestage: 'customer',
         leadStatus: 'CONNECTED',
       })
 
-      await sendEnrollmentReceipt(
-        session.customer_email!,
-        meta.firstName || '',
-        meta.cohort || '',
-        meta.plan || ''
-      )
+      await sendEnrollmentReceipt(email, firstName, '', '')
     } catch (error) {
       console.error('[Stripe Webhook] Post-payment processing error:', error)
       // Still return 200 to Stripe to prevent re-delivery; log the error for manual follow-up
