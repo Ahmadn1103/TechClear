@@ -10,6 +10,7 @@ import { QRCodeSVG } from "qrcode.react";
 
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Waitlist form state
@@ -20,6 +21,10 @@ export default function Home() {
   const [interest, setInterest] = useState("");
   const [formState, setFormState] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const scrollTo = (id: string) => (e: React.MouseEvent) => {
     e.preventDefault()
@@ -146,7 +151,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0 opacity-[0.06] pointer-events-none">
           <motion.svg
             width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
-            animate={{ x: [0, 60], y: [0, 60] }}
+            animate={mounted ? { x: [0, 60], y: [0, 60] } : {}}
             transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
           >
             <defs>
@@ -163,26 +168,26 @@ export default function Home() {
         <motion.div
           className="absolute top-[-20%] right-[-10%] w-[700px] h-[700px] rounded-full pointer-events-none z-0"
           style={{ background: "radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%)" }}
-          animate={{ x: [0, -80, 0], y: [0, 60, 0] }}
+          animate={mounted ? { x: [0, -80, 0], y: [0, 60, 0] } : {}}
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
           className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full pointer-events-none z-0"
           style={{ background: "radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%)" }}
-          animate={{ x: [0, 60, 0], y: [0, -40, 0] }}
+          animate={mounted ? { x: [0, 60, 0], y: [0, -40, 0] } : {}}
           transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 3 }}
         />
         <motion.div
           className="absolute top-[50%] left-[40%] w-[400px] h-[400px] rounded-full pointer-events-none z-0"
           style={{ background: "radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%)" }}
-          animate={{ x: [0, -40, 40, 0], y: [0, 30, -30, 0], scale: [1, 1.2, 0.9, 1] }}
+          animate={mounted ? { x: [0, -40, 40, 0], y: [0, 30, -30, 0], scale: [1, 1.2, 0.9, 1] } : {}}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 6 }}
         />
 
         <div className="max-w-5xl relative z-10 transform-style-3d">
           <motion.p
             initial={{ opacity: 0, y: -20, filter: "blur(10px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            animate={mounted ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             className="text-sm md:text-2xl font-bold tracking-[0.3em] uppercase text-white mb-6 md:mb-10 border-b-2 border-white/40 pb-3 inline-block"
           >
@@ -191,7 +196,7 @@ export default function Home() {
 
           <motion.h1
             initial={{ opacity: 0, rotateX: 45, y: 100, scale: 0.9, filter: "blur(20px)" }}
-            animate={{ opacity: 1, rotateX: 0, y: 0, scale: 1, filter: "blur(0px)" }}
+            animate={mounted ? { opacity: 1, rotateX: 0, y: 0, scale: 1, filter: "blur(0px)" } : {}}
             transition={{ duration: 1.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="font-playfair text-[2.6rem] sm:text-6xl md:text-8xl lg:text-9xl leading-[0.95] tracking-tight mb-8 md:mb-12 origin-bottom"
           >
@@ -200,7 +205,7 @@ export default function Home() {
 
           <motion.div
             initial={{ opacity: 0, rotateY: 30, x: -50, z: -100, filter: "blur(15px)" }}
-            animate={{ opacity: 1, rotateY: 0, x: 0, z: 0, filter: "blur(0px)" }}
+            animate={mounted ? { opacity: 1, rotateY: 0, x: 0, z: 0, filter: "blur(0px)" } : {}}
             transition={{ duration: 1.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="mb-10 md:mb-16 max-w-3xl p-6 md:p-10 bg-[#050505]/50 backdrop-blur-md border border-white/10 relative overflow-hidden group shadow-[0_30px_60px_-15px_rgba(255,255,255,0.05)] origin-left"
           >
@@ -215,7 +220,7 @@ export default function Home() {
 
           <motion.div
             initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            animate={mounted ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
             transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-start flex-wrap"
           >
@@ -270,8 +275,8 @@ export default function Home() {
           {/* About Us */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: "some" }}
+            whileInView={mounted ? { opacity: 1, y: 0 } : {}}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8 }}
           >
             <span className="inline-block border border-white/30 text-sm md:text-base font-bold tracking-[0.2em] uppercase px-5 py-2 mb-8 text-zinc-200">
@@ -285,8 +290,8 @@ export default function Home() {
           {/* Mission */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: "some" }}
+            whileInView={mounted ? { opacity: 1, y: 0 } : {}}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <span className="inline-block border border-white/30 text-sm md:text-base font-bold tracking-[0.2em] uppercase px-5 py-2 mb-8 text-zinc-200">
@@ -300,8 +305,8 @@ export default function Home() {
           {/* Vision */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: "some" }}
+            whileInView={mounted ? { opacity: 1, y: 0 } : {}}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <span className="inline-block border border-white/30 text-sm md:text-base font-bold tracking-[0.2em] uppercase px-5 py-2 mb-8 text-zinc-200">
@@ -320,7 +325,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0 opacity-[0.08] pointer-events-none">
           <motion.svg
             width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
-            animate={{ x: [0, -40], y: [0, -40] }}
+            animate={mounted ? { x: [0, -40], y: [0, -40] } : {}}
             transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
           >
             <defs>
@@ -335,8 +340,8 @@ export default function Home() {
         <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-24 relative z-10">
           <motion.div
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-100px", amount: "some" }}
+            whileInView={mounted ? { opacity: 1 } : {}}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8 }}
             className="md:col-span-5"
           >
@@ -355,8 +360,8 @@ export default function Home() {
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, amount: "some" }}
+                  whileInView={mounted ? { opacity: 1, x: 0 } : {}}
+                  viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.6, delay: i * 0.15 }}
                   className="flex gap-6 items-start group p-6 md:p-8 bg-white/[0.02] border border-white/10 hover:bg-white/[0.05] hover:border-white/30 transition-all duration-500"
                 >
@@ -373,8 +378,8 @@ export default function Home() {
             {/* New Problem/Context Image */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: "some" }}
+              whileInView={mounted ? { opacity: 1, scale: 1 } : {}}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 1, delay: 0.4 }}
               className="mt-12 relative w-full h-[250px] grayscale hover:grayscale-0 transition-all duration-1000 ease-in-out border border-white/10 group overflow-hidden"
             >
@@ -391,8 +396,8 @@ export default function Home() {
 
           <motion.div
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-100px", amount: "some" }}
+            whileInView={mounted ? { opacity: 1 } : {}}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="md:col-span-7 md:pl-16 border-t md:border-t-0 md:border-l border-white/10 pt-16 md:pt-0"
           >
@@ -410,8 +415,8 @@ export default function Home() {
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: "some" }}
+                  whileInView={mounted ? { opacity: 1, y: 0 } : {}}
+                  viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.6, delay: 0.3 + (i * 0.1) }}
                   className="p-8 bg-gradient-to-b from-white/5 to-transparent border border-white/10 hover:border-white/30 transition-all duration-500 group"
                 >
@@ -427,8 +432,8 @@ export default function Home() {
             {/* Added Placeholder Image to balance the layout */}
             <motion.div
               initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, amount: "some" }}
+              whileInView={mounted ? { opacity: 1 } : {}}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.8, delay: 0.4 }}
               className="mt-12 relative w-full h-[250px] grayscale hover:grayscale-0 transition-all duration-1000 ease-in-out border border-white/10 group overflow-hidden hidden md:block"
             >
@@ -459,10 +464,10 @@ export default function Home() {
                 width={i % 2 === 0 ? "1" : "2"}
                 height={`${20 + (i % 30)}%`}
                 fill="white"
-                animate={{
-                  y: ["-20%", "120%"],
-                  opacity: [0, 0.8, 0]
-                }}
+                 animate={mounted ? {
+                   y: ["-20%", "120%"],
+                   opacity: [0, 0.8, 0]
+                 } : {}}
                 transition={{
                   duration: 3 + (i % 5),
                   repeat: Infinity,
@@ -477,8 +482,8 @@ export default function Home() {
         <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-24 relative z-10">
           <motion.div
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-100px", amount: "some" }}
+            whileInView={mounted ? { opacity: 1 } : {}}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8 }}
             className="md:col-span-5"
           >
@@ -495,8 +500,8 @@ export default function Home() {
             {/* Immersive Bootcamp Image */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: "some" }}
+              whileInView={mounted ? { opacity: 1, y: 0 } : {}}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               className="relative w-full h-[300px] md:h-[400px] grayscale hover:grayscale-0 transition-all duration-1000 ease-in-out border border-white/10 mt-8 group overflow-hidden"
             >
@@ -521,8 +526,8 @@ export default function Home() {
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px", amount: "some" }}
+                whileInView={mounted ? { opacity: 1, y: 0 } : {}}
+                viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: i * 0.1 }}
                 className="bg-[#0a0a0a] p-8 md:p-10 border border-white/10 hover:border-white/30 transition-all duration-300 group rounded-none h-fit cursor-none"
               >
@@ -533,8 +538,8 @@ export default function Home() {
             {/* Added Placeholder Image to balance the layout */}
             <motion.div
               initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, amount: "some" }}
+              whileInView={mounted ? { opacity: 1 } : {}}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.8, delay: 0.4 }}
               className="col-span-1 sm:col-span-2 relative w-full h-[200px] mt-2 grayscale hover:grayscale-0 transition-all duration-1000 ease-in-out border border-white/10 group overflow-hidden hidden md:block"
             >
@@ -558,7 +563,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0 opacity-[0.06] pointer-events-none">
           <motion.svg
             width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
-            animate={{ x: [0, 60], y: [0, 60] }}
+            animate={mounted ? { x: [0, 60], y: [0, 60] } : {}}
             transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
           >
             <defs>
@@ -575,19 +580,19 @@ export default function Home() {
         <motion.div
           className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full pointer-events-none z-0"
           style={{ background: "radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%)" }}
-          animate={{ x: [0, 80, 0], y: [0, 40, 0] }}
+          animate={mounted ? { x: [0, 80, 0], y: [0, 40, 0] } : {}}
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
           className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full pointer-events-none z-0"
           style={{ background: "radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%)" }}
-          animate={{ x: [0, -60, 0], y: [0, -50, 0] }}
+          animate={mounted ? { x: [0, -60, 0], y: [0, -50, 0] } : {}}
           transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 2 }}
         />
         <motion.div
           className="absolute top-[40%] left-[50%] w-[400px] h-[400px] rounded-full pointer-events-none z-0"
           style={{ background: "radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%)" }}
-          animate={{ x: [0, 40, -40, 0], y: [0, -30, 30, 0], scale: [1, 1.2, 0.9, 1] }}
+          animate={mounted ? { x: [0, 40, -40, 0], y: [0, -30, 30, 0], scale: [1, 1.2, 0.9, 1] } : {}}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 4 }}
         />
 
@@ -595,8 +600,8 @@ export default function Home() {
           {/* Section header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            whileInView={mounted ? { opacity: 1, y: 0 } : {}}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8 }}
             className="mb-16"
           >
@@ -611,8 +616,8 @@ export default function Home() {
           {/* Pricing card */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
+            whileInView={mounted ? { opacity: 1, y: 0 } : {}}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7, delay: 0.1 }}
             className="border border-white/20 bg-white/[0.02] p-10 md:p-16 hover:border-white/40 hover:bg-white/[0.04] transition-all duration-500 group relative overflow-hidden mb-12"
           >
@@ -701,10 +706,10 @@ export default function Home() {
                 r="0"
                 stroke="white"
                 strokeWidth="1"
-                animate={{
-                  r: [0, 800],
-                  opacity: [0.8, 0]
-                }}
+                 animate={mounted ? {
+                   r: [0, 800],
+                   opacity: [0.8, 0]
+                 } : {}}
                 transition={{
                   duration: 10,
                   repeat: Infinity,
@@ -719,8 +724,8 @@ export default function Home() {
         <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 relative z-10">
           <motion.div
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-100px", amount: "some" }}
+            whileInView={mounted ? { opacity: 1 } : {}}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8 }}
           >
             <span className="inline-block border border-white/30 text-sm md:text-base font-bold tracking-[0.2em] uppercase px-5 py-2 mb-8 text-zinc-200">
@@ -751,8 +756,8 @@ export default function Home() {
 
           <motion.div
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-100px", amount: "some" }}
+            whileInView={mounted ? { opacity: 1 } : {}}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             {formState === "success" ? (
