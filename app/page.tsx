@@ -661,7 +661,7 @@ export default function Home() {
       <section className="px-6 md:px-16 py-20 md:py-32 bg-[#020202] border-b border-white/10 text-white">
         <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-16 md:gap-24">
           <div className="flex-1">
-            <p className="text-sm tracking-[0.2em] uppercase text-white/40 mb-4">Early Access</p>
+            <span className="inline-block border border-white/30 text-sm font-bold tracking-[0.2em] uppercase px-5 py-2 mb-8 text-zinc-200">Early Access</span>
             <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6 leading-tight">
               Join the Waitlist<br />
               <span className="italic">Instantly</span>
@@ -743,7 +743,7 @@ export default function Home() {
                   level="M"
                 />
               </div>
-              <p className="text-white/40 text-xs tracking-widest uppercase leading-relaxed">
+              <p className="text-white text-sm font-semibold tracking-widest uppercase leading-relaxed">
                 Scan to join<br />the waitlist
               </p>
             </div>

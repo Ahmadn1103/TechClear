@@ -11,7 +11,7 @@ const INTEREST_LABELS: Record<string, string> = {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
-    const { firstName, email, phone, interest } = body
+    const { firstName, lastName, email, phone, interest } = body
 
     if (!firstName || !email) {
       return NextResponse.json(
@@ -20,9 +20,12 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    const fullName = lastName ? `${firstName} ${lastName}` : firstName
+
     const { id: contactId } = await createOrUpdateContact({
       email,
       firstName,
+      ...(lastName ? { lastName } : {}),
       ...(phone ? { phone } : {}),
       lifecyclestage: 'lead',
       leadStatus: 'NEW',
@@ -38,7 +41,7 @@ export async function POST(req: NextRequest) {
     // Email failures are non-fatal — HubSpot contact creation is the critical step
     await Promise.allSettled([
       sendWaitlistConfirmation(email, firstName, interest),
-      sendInternalNotification({ firstName, email, phone, interest }),
+      sendInternalNotification({ firstName, lastName, fullName, email, phone, interest }),
     ])
 
     return NextResponse.json({ success: true })

@@ -11,16 +11,19 @@ const INTEREST_LABELS: Record<string, string> = {
 
 export async function sendInternalNotification(data: {
   firstName: string
+  lastName?: string
+  fullName?: string
   email: string
   phone?: string
   interest?: string
 }) {
+  const displayName = data.fullName || `${data.firstName}${data.lastName ? ' ' + data.lastName : ''}`
   const interestLabel = data.interest ? (INTEREST_LABELS[data.interest] ?? data.interest) : 'Not specified'
 
   await resend.emails.send({
     from: FROM_ADDRESS,
     to: ['abdullah.r52@gmail.com', 'contact@techclear.org'],
-    subject: `New Waitlist Signup — ${data.firstName}`,
+    subject: `New Waitlist Signup — ${displayName}`,
     html: `
       <!DOCTYPE html>
       <html>
@@ -34,7 +37,7 @@ export async function sendInternalNotification(data: {
           <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
             <tr style="background-color: #f4f4f4;">
               <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Name</td>
-              <td style="padding: 10px; border: 1px solid #ddd;">${data.firstName}</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">${displayName}</td>
             </tr>
             <tr>
               <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Email</td>
