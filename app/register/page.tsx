@@ -1,29 +1,11 @@
-'use client'
-
-import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight, ArrowLeft } from 'lucide-react'
 
+const PAYMENT_LINK = 'https://buy.stripe.com/6oU14mgs2bIogALaim7wA01'
+
 export default function RegisterPage() {
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-
-  async function handlePay() {
-    setLoading(true)
-    setError('')
-    try {
-      const res = await fetch('/api/enroll', { method: 'POST' })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || 'Something went wrong.')
-      window.location.href = data.url
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Something went wrong.')
-      setLoading(false)
-    }
-  }
-
   return (
-    <main className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-6">
+    <main className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-6 cursor-auto">
       <div className="w-full max-w-lg">
         <Link
           href="/"
@@ -58,18 +40,13 @@ export default function RegisterPage() {
           </div>
         </div>
 
-        {error && (
-          <p className="text-red-400 text-sm mb-4">{error}</p>
-        )}
-
-        <button
-          onClick={handlePay}
-          disabled={loading}
-          className="w-full inline-flex items-center justify-center gap-3 bg-white text-black px-10 py-5 font-bold text-[12px] tracking-[0.15em] uppercase hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        <a
+          href={PAYMENT_LINK}
+          className="w-full inline-flex items-center justify-center gap-3 bg-white text-black px-10 py-5 font-bold text-[12px] tracking-[0.15em] uppercase hover:bg-zinc-200 transition-colors"
         >
-          {loading ? 'Redirecting...' : 'Pay $3,000 — Secure Checkout'}
-          {!loading && <ArrowRight className="w-4 h-4" />}
-        </button>
+          Pay $3,000 — Secure Checkout
+          <ArrowRight className="w-4 h-4" />
+        </a>
 
         <p className="text-white/60 text-sm text-center mt-4">
           Powered by Stripe · SSL encrypted

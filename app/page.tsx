@@ -1,109 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, useSpring, useMotionValue } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
 
-// Custom Cursor Component
-const CustomCursor = () => {
-  const [isHovered, setIsHovered] = useState(false);
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
-  
-  const springConfig = { damping: 25, stiffness: 700, mass: 0.5 };
-  const cursorXSpring = useSpring(cursorX, springConfig);
-  const cursorYSpring = useSpring(cursorY, springConfig);
-
-  useEffect(() => {
-    const moveCursor = (e: MouseEvent) => {
-      cursorX.set(e.clientX);
-      cursorY.set(e.clientY);
-    };
-    
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (
-        target.tagName.toLowerCase() === 'a' || 
-        target.tagName.toLowerCase() === 'button' ||
-        target.closest('a') ||
-        target.closest('button')
-      ) {
-        setIsHovered(true);
-      } else {
-        setIsHovered(false);
-      }
-    };
-
-    window.addEventListener("mousemove", moveCursor);
-    window.addEventListener("mouseover", handleMouseOver);
-    
-    return () => {
-      window.removeEventListener("mousemove", moveCursor);
-      window.removeEventListener("mouseover", handleMouseOver);
-    };
-  }, [cursorX, cursorY]);
-
-  // Hide custom cursor on touch devices
-  if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
-    return null;
-  }
-
-  return (
-    <>
-      {/* Ambient Glow / Flashlight Effect */}
-      <motion.div
-        className="fixed top-0 left-0 w-[600px] h-[600px] pointer-events-none z-[9000] hidden md:block mix-blend-screen"
-        style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
-          translateX: "-50%",
-          translateY: "-50%",
-          background: "radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 60%)"
-        }}
-        animate={{
-          scale: isHovered ? 1.5 : 1,
-        }}
-        transition={{ type: "spring", stiffness: 200, damping: 30 }}
-      />
-
-      {/* Center Sharp Dot (Diamond) */}
-      <motion.div
-        className="fixed top-0 left-0 w-4 h-4 bg-white pointer-events-none z-[9999] mix-blend-difference hidden md:block"
-        style={{
-          x: cursorX,
-          y: cursorY,
-          translateX: "-50%",
-          translateY: "-50%",
-          rotate: 45
-        }}
-        animate={{
-          scale: isHovered ? 6 : 1,
-          opacity: 1
-        }}
-        transition={{ type: "spring", stiffness: 400, damping: 25 }}
-      />
-
-      {/* Trailing Hollow Diamond */}
-      <motion.div
-        className="fixed top-0 left-0 w-10 h-10 border border-white pointer-events-none z-[9998] mix-blend-difference flex items-center justify-center bg-transparent hidden md:block"
-        style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-        animate={{
-          rotate: isHovered ? 90 : 45,
-          scale: isHovered ? 0 : 1,
-          opacity: isHovered ? 0 : 1
-        }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      />
-    </>
-  );
-};
 
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -148,7 +51,6 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-black text-white font-sans">
-      <CustomCursor />
       {/* Navigation */}
       <header className="fixed top-0 w-full z-50 flex flex-col items-center pointer-events-none">
         <nav
@@ -364,12 +266,9 @@ export default function Home() {
             <span className="inline-block border border-white/30 text-sm md:text-base font-bold tracking-[0.2em] uppercase px-5 py-2 mb-8 text-zinc-200">
               About Us
             </span>
-            <p className="text-lg font-light leading-relaxed mb-8 text-zinc-300">
+            <p className="text-lg font-light leading-relaxed text-zinc-300">
               Tech Clear is a leading IT startup dedicated to closing the skill gap. Discover why our industry is evolving and explore the deep challenges aspiring professionals face navigating traditional career paths today.
             </p>
-            <Link href="#services" className="font-bold uppercase tracking-widest text-xs border border-white px-6 py-3 hover:bg-white hover:text-black transition-all cursor-none inline-block">
-              The Problem
-            </Link>
           </motion.div>
 
           {/* Mission */}
@@ -382,12 +281,9 @@ export default function Home() {
             <span className="inline-block border border-white/30 text-sm md:text-base font-bold tracking-[0.2em] uppercase px-5 py-2 mb-8 text-zinc-200">
               Our Mission
             </span>
-            <p className="text-lg font-light leading-relaxed mb-8 text-zinc-300">
+            <p className="text-lg font-light leading-relaxed text-zinc-300">
               We aim to equip our students with the skills to excel in Agile management. Explore our rigorous flagship program, designed specifically to integrate SAFe principles with cutting-edge AI tools to shape indispensable leaders.
             </p>
-            <Link href="#bootcamp" className="font-bold uppercase tracking-widest text-xs border border-white px-6 py-3 hover:bg-white hover:text-black transition-all cursor-none inline-block">
-              Flagship Program
-            </Link>
           </motion.div>
 
           {/* Vision */}
@@ -400,12 +296,9 @@ export default function Home() {
             <span className="inline-block border border-white/30 text-sm md:text-base font-bold tracking-[0.2em] uppercase px-5 py-2 mb-8 text-zinc-200">
               Our Vision
             </span>
-            <p className="text-lg font-light leading-relaxed mb-8 text-zinc-300">
+            <p className="text-lg font-light leading-relaxed text-zinc-300">
               Our vision is to empower the tech-ready generation. If you share our philosophy and are ready to take the next step in advancing your career, we would love to hear from you. Get in touch with our admissions team.
             </p>
-            <Link href="#waitlist" className="font-bold uppercase tracking-widest text-xs border border-white px-6 py-3 hover:bg-white hover:text-black transition-all cursor-none inline-block">
-              Contact Us
-            </Link>
           </motion.div>
         </div>
       </section>
@@ -748,6 +641,37 @@ export default function Home() {
           >
             Secure payment. All major cards accepted.
           </motion.p>
+        </div>
+      </section>
+
+      {/* QR Code — Early Access */}
+      <section className="px-6 md:px-16 py-20 md:py-32 bg-[#020202] border-b border-white/10 text-white">
+        <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-16 md:gap-24">
+          <div className="flex-1">
+            <p className="text-sm tracking-[0.2em] uppercase text-white/40 mb-4">Early Access</p>
+            <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6 leading-tight">
+              Join the Waitlist<br />
+              <span className="italic">Instantly</span>
+            </h2>
+            <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-sm">
+              Scan the code with your phone to secure your spot in the PM + AI Flagship Program.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center gap-6">
+            <div className="p-5 bg-white" style={{ lineHeight: 0 }}>
+              <QRCodeSVG
+                value="https://www.techclear.org/#waitlist"
+                size={180}
+                bgColor="#ffffff"
+                fgColor="#000000"
+                level="M"
+              />
+            </div>
+            <p className="text-white/40 text-xs tracking-widest uppercase text-center">
+              techclear.org/#waitlist
+            </p>
+          </div>
         </div>
       </section>
 
