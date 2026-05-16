@@ -107,6 +107,7 @@ const CustomCursor = () => {
 
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Waitlist form state
   const [firstName, setFirstName] = useState("");
@@ -149,19 +150,21 @@ export default function Home() {
     <main className="min-h-screen bg-black text-white font-sans">
       <CustomCursor />
       {/* Navigation */}
-      <header className="fixed top-0 w-full z-50 flex justify-center pointer-events-none">
-        <nav 
-          className={`pointer-events-auto transition-all duration-1000 ease-in-out flex justify-between items-center mt-4 w-[calc(100%-2rem)] max-w-[1400px] px-6 md:px-8 py-3 rounded-2xl border ${
-            isScrolled 
-              ? "bg-[#050505]/90 backdrop-blur-xl border-white/10 shadow-2xl" 
+      <header className="fixed top-0 w-full z-50 flex flex-col items-center pointer-events-none">
+        <nav
+          className={`pointer-events-auto transition-all duration-1000 ease-in-out flex justify-between items-center mt-4 w-[calc(100%-2rem)] max-w-[1400px] px-5 md:px-8 py-2 md:py-3 rounded-2xl border ${
+            isScrolled || mobileMenuOpen
+              ? "bg-[#050505]/90 backdrop-blur-xl border-white/10 shadow-2xl"
               : "bg-transparent backdrop-blur-none border-transparent shadow-none"
           }`}
         >
-          <Link href="#hero" className="flex items-center">
-            <div className="relative w-16 h-16 md:w-20 md:h-20">
+          <Link href="#hero" className="flex items-center" onClick={() => setMobileMenuOpen(false)}>
+            <div className="relative w-14 h-14 md:w-20 md:h-20">
               <Image src="/assets/branding/1.png" alt="TechClear" fill sizes="80px" className="object-contain object-left" priority loading="eager" />
             </div>
           </Link>
+
+          {/* Desktop links */}
           <div className="hidden md:flex gap-8 text-[11px] font-semibold tracking-[0.15em] uppercase text-zinc-200">
             <Link href="#about" className="hover:text-white transition-colors">About Us</Link>
             <Link href="#services" className="hover:text-white transition-colors">The Problem</Link>
@@ -169,17 +172,66 @@ export default function Home() {
             <Link href="#enroll" className="hover:text-white transition-colors">Enroll</Link>
             <Link href="#waitlist" className="hover:text-white transition-colors">Contact</Link>
           </div>
-          <Link 
-            href="#waitlist" 
-            className="text-[11px] font-semibold tracking-[0.15em] uppercase border border-zinc-700 px-6 py-3 hover:bg-white hover:text-black hover:border-white transition-all duration-300 rounded-none"
-          >
-            Join Waitlist
-          </Link>
+
+          <div className="flex items-center gap-3">
+            <Link
+              href="#waitlist"
+              className="hidden md:block text-[11px] font-semibold tracking-[0.15em] uppercase border border-zinc-700 px-6 py-3 hover:bg-white hover:text-black hover:border-white transition-all duration-300 rounded-none"
+            >
+              Join Waitlist
+            </Link>
+            {/* Hamburger */}
+            <button
+              className="md:hidden flex flex-col justify-center gap-[5px] p-2"
+              onClick={() => setMobileMenuOpen((o) => !o)}
+              aria-label="Toggle navigation menu"
+            >
+              <span className={`block w-6 h-0.5 bg-white transition-all duration-300 origin-center ${mobileMenuOpen ? "rotate-45 translate-y-[7px]" : ""}`} />
+              <span className={`block w-6 h-0.5 bg-white transition-all duration-300 ${mobileMenuOpen ? "opacity-0 scale-x-0" : ""}`} />
+              <span className={`block w-6 h-0.5 bg-white transition-all duration-300 origin-center ${mobileMenuOpen ? "-rotate-45 -translate-y-[7px]" : ""}`} />
+            </button>
+          </div>
         </nav>
+
+        {/* Mobile dropdown menu */}
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="pointer-events-auto md:hidden w-[calc(100%-2rem)] max-w-[1400px] mt-2 bg-[#050505]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+          >
+            <div className="flex flex-col p-6 gap-1">
+              {[
+                { href: "#about", label: "About Us" },
+                { href: "#services", label: "The Problem" },
+                { href: "#bootcamp", label: "Flagship Program" },
+                { href: "#enroll", label: "Enroll" },
+                { href: "#waitlist", label: "Contact" },
+              ].map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-[13px] font-semibold tracking-[0.15em] uppercase text-zinc-300 hover:text-white transition-colors py-4 border-b border-white/5 last:border-0"
+                >
+                  {label}
+                </Link>
+              ))}
+              <Link
+                href="#waitlist"
+                onClick={() => setMobileMenuOpen(false)}
+                className="mt-4 text-center text-[11px] font-bold tracking-[0.15em] uppercase border border-white/30 px-6 py-4 text-white hover:bg-white hover:text-black transition-all duration-300"
+              >
+                Join Waitlist
+              </Link>
+            </div>
+          </motion.div>
+        )}
       </header>
 
       {/* Hero Section */}
-      <section id="hero" className="relative min-h-screen flex flex-col justify-center px-8 md:px-16 pt-32 pb-20 max-w-[1400px] mx-auto border-b border-white/10 overflow-hidden">
+      <section id="hero" className="relative min-h-screen flex flex-col justify-center px-6 md:px-16 pt-28 pb-16 md:pt-32 md:pb-20 max-w-[1400px] mx-auto border-b border-white/10 overflow-hidden">
         {/* Animated diagonal grid */}
         <div className="absolute inset-0 z-0 opacity-[0.06] pointer-events-none">
           <motion.svg
@@ -222,7 +274,7 @@ export default function Home() {
             initial={{ opacity: 0, y: -20, filter: "blur(10px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-lg md:text-2xl font-bold tracking-[0.3em] uppercase text-white mb-10 border-b-2 border-white/40 pb-3 inline-block"
+            className="text-sm md:text-2xl font-bold tracking-[0.3em] uppercase text-white mb-6 md:mb-10 border-b-2 border-white/40 pb-3 inline-block"
           >
             IT Workforce Training
           </motion.p>
@@ -231,7 +283,7 @@ export default function Home() {
             initial={{ opacity: 0, rotateX: 45, y: 100, scale: 0.9, filter: "blur(20px)" }}
             animate={{ opacity: 1, rotateX: 0, y: 0, scale: 1, filter: "blur(0px)" }}
             transition={{ duration: 1.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-playfair text-6xl md:text-8xl lg:text-9xl leading-[0.95] tracking-tight mb-12 origin-bottom"
+            className="font-playfair text-[2.6rem] sm:text-6xl md:text-8xl lg:text-9xl leading-[0.95] tracking-tight mb-8 md:mb-12 origin-bottom"
           >
             Build with <span className="italic text-zinc-300">intention</span>.<br />Advance the <span className="italic text-zinc-300">tech future</span>.
           </motion.h1>
@@ -240,7 +292,7 @@ export default function Home() {
             initial={{ opacity: 0, rotateY: 30, x: -50, z: -100, filter: "blur(15px)" }}
             animate={{ opacity: 1, rotateY: 0, x: 0, z: 0, filter: "blur(0px)" }}
             transition={{ duration: 1.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-16 max-w-3xl p-8 md:p-10 bg-[#050505]/50 backdrop-blur-md border border-white/10 relative overflow-hidden group shadow-[0_30px_60px_-15px_rgba(255,255,255,0.05)] origin-left"
+            className="mb-10 md:mb-16 max-w-3xl p-6 md:p-10 bg-[#050505]/50 backdrop-blur-md border border-white/10 relative overflow-hidden group shadow-[0_30px_60px_-15px_rgba(255,255,255,0.05)] origin-left"
           >
             {/* Subtle background glow */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 ease-out" />
@@ -255,35 +307,35 @@ export default function Home() {
             initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col sm:flex-row gap-6 items-start flex-wrap"
+            className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-start flex-wrap"
           >
             <Link
               href="#bootcamp"
-              className="group flex items-center gap-3 bg-white text-black px-10 py-5 font-bold text-[13px] tracking-[0.15em] uppercase hover:bg-zinc-200 transition-colors rounded-none"
+              className="group flex items-center justify-between sm:justify-start gap-3 bg-white text-black px-7 py-4 md:px-10 md:py-5 font-bold text-[12px] md:text-[13px] tracking-[0.15em] uppercase hover:bg-zinc-200 transition-colors rounded-none"
             >
               Flagship Program
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               href="#enroll"
-              className="group flex items-center gap-3 border border-white px-10 py-5 font-bold text-[13px] tracking-[0.15em] uppercase text-white hover:bg-white hover:text-black transition-all duration-300 rounded-none"
+              className="group flex items-center justify-between sm:justify-start gap-3 border border-white px-7 py-4 md:px-10 md:py-5 font-bold text-[12px] md:text-[13px] tracking-[0.15em] uppercase text-white hover:bg-white hover:text-black transition-all duration-300 rounded-none"
             >
               Enroll
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               href="#waitlist"
-              className="group flex items-center gap-3 border border-white/40 px-10 py-5 font-bold text-[13px] tracking-[0.15em] uppercase text-zinc-400 hover:border-white hover:text-white transition-all duration-300 rounded-none"
+              className="group flex items-center justify-between sm:justify-start gap-3 border border-white/40 px-7 py-4 md:px-10 md:py-5 font-bold text-[12px] md:text-[13px] tracking-[0.15em] uppercase text-zinc-400 hover:border-white hover:text-white transition-all duration-300 rounded-none"
             >
               Contact
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </motion.div>
         </div>
       </section>
 
       {/* About Us Section */}
-      <section id="about" className="px-8 md:px-16 py-32 bg-[#050505] text-white relative overflow-hidden">
+      <section id="about" className="px-6 md:px-16 py-16 md:py-32 bg-[#050505] text-white relative overflow-hidden">
         {/* Animated Hexagon Pattern */}
         <div className="absolute inset-0 z-0 opacity-[0.05] pointer-events-none">
           <motion.svg 
@@ -301,7 +353,7 @@ export default function Home() {
           </motion.svg>
         </div>
 
-        <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 relative z-10">
+        <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 relative z-10">
           {/* About Us */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -359,7 +411,7 @@ export default function Home() {
       </section>
 
       {/* Philosophy / The Problem Section */}
-      <section id="services" className="px-8 md:px-16 py-40 bg-[#020202] border-b border-white/10 relative overflow-hidden">
+      <section id="services" className="px-6 md:px-16 py-20 md:py-40 bg-[#020202] border-b border-white/10 relative overflow-hidden">
         {/* Animated Blueprint Grid Background */}
         <div className="absolute inset-0 z-0 opacity-[0.08] pointer-events-none">
           <motion.svg 
@@ -387,7 +439,7 @@ export default function Home() {
             <span className="inline-block border border-white/30 text-sm md:text-base font-bold tracking-[0.2em] uppercase px-5 py-2 mb-8 text-zinc-200">
               The Problem
             </span>
-            <h3 className="font-playfair text-4xl md:text-6xl leading-tight mb-8">
+            <h3 className="font-playfair text-3xl md:text-6xl leading-tight mb-8">
               The tech industry is evolving at <span className="italic">breakneck speed</span>.
             </h3>
             <div className="flex flex-col gap-6 border-t border-white/10 pt-12">
@@ -441,7 +493,7 @@ export default function Home() {
             className="md:col-span-7 md:pl-16 border-t md:border-t-0 md:border-l border-white/10 pt-16 md:pt-0"
           >
             <p className="text-sm md:text-base font-bold tracking-[0.2em] uppercase text-zinc-200 mb-8 border-b border-white/20 pb-2 inline-block">What We Do</p>
-            <p className="font-playfair text-3xl md:text-5xl leading-tight mb-12">
+            <p className="font-playfair text-2xl md:text-5xl leading-tight mb-10 md:mb-12">
               We equip the next generation of IT leaders with the <span className="italic">framework</span>, <span className="italic">community</span>, and <span className="italic">coaching</span> necessary to build the future.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -491,7 +543,7 @@ export default function Home() {
       </section>
 
       {/* Flagship Program Section */}
-      <section id="bootcamp" className="px-8 md:px-16 py-40 border-b border-white/10 bg-black text-white relative overflow-hidden">
+      <section id="bootcamp" className="px-6 md:px-16 py-20 md:py-40 border-b border-white/10 bg-black text-white relative overflow-hidden">
         {/* Animated Data Stream */}
         <div className="absolute inset-0 z-0 opacity-[0.15] pointer-events-none">
           <motion.svg width="100%" height="100%" preserveAspectRatio="none">
@@ -529,7 +581,7 @@ export default function Home() {
             <span className="inline-block border border-white/30 text-sm md:text-base font-bold tracking-[0.2em] uppercase px-5 py-2 mb-8 text-zinc-200">
               Flagship Program
             </span>
-            <h2 className="font-playfair text-5xl md:text-7xl mb-8 leading-tight">
+            <h2 className="font-playfair text-4xl md:text-7xl mb-8 leading-tight">
               PM + AI <br /><span className="italic">Flagship Program</span>
             </h2>
             <p className="text-xl text-zinc-200 font-light mb-12 leading-relaxed">
@@ -597,7 +649,7 @@ export default function Home() {
       </section>
 
       {/* Enroll & Pay Section */}
-      <section id="enroll" className="px-8 md:px-16 py-40 bg-[#050505] text-white border-b border-white/10 relative overflow-hidden">
+      <section id="enroll" className="px-6 md:px-16 py-20 md:py-40 bg-[#050505] text-white border-b border-white/10 relative overflow-hidden">
         {/* Animated diagonal grid */}
         <div className="absolute inset-0 z-0 opacity-[0.06] pointer-events-none">
           <motion.svg
@@ -647,7 +699,7 @@ export default function Home() {
             <span className="inline-block border border-white/30 text-sm md:text-base font-bold tracking-[0.2em] uppercase px-5 py-2 mb-8 text-zinc-200">
               Enrollment
             </span>
-            <h2 className="font-playfair text-5xl md:text-7xl leading-tight">
+            <h2 className="font-playfair text-4xl md:text-7xl leading-tight">
               Ready to <span className="italic">enroll?</span>
             </h2>
           </motion.div>
@@ -664,7 +716,7 @@ export default function Home() {
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-12">
               <div>
                 <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 mb-6 block">One-Time Payment</span>
-                <p className="font-playfair text-6xl md:text-8xl text-white mb-3 leading-none">$3,000</p>
+                <p className="font-playfair text-5xl md:text-8xl text-white mb-3 leading-none">$3,000</p>
                 <p className="text-zinc-200 text-lg md:text-xl font-semibold tracking-wide mt-2">Full access. No installments. No hidden fees.</p>
               </div>
               <ul className="space-y-4 md:max-w-xs">
@@ -700,7 +752,7 @@ export default function Home() {
       </section>
 
       {/* Waitlist / CTA Section */}
-      <section id="waitlist" className="px-8 md:px-16 py-40 bg-black text-white relative overflow-hidden">
+      <section id="waitlist" className="px-6 md:px-16 py-20 md:py-40 bg-black text-white relative overflow-hidden">
         {/* Expanding Radar Rings */}
         <div className="absolute inset-0 z-0 opacity-[0.15] pointer-events-none flex items-center justify-center overflow-hidden">
           <motion.svg width="800" height="800" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -737,10 +789,10 @@ export default function Home() {
             <span className="inline-block border border-white/30 text-sm md:text-base font-bold tracking-[0.2em] uppercase px-5 py-2 mb-8 text-zinc-200">
               Contact
             </span>
-            <h2 className="font-playfair text-5xl md:text-7xl mb-8">
+            <h2 className="font-playfair text-4xl md:text-7xl mb-6 md:mb-8">
               Request <span className="italic">early access</span>.
             </h2>
-            <p className="text-xl md:text-2xl text-zinc-400 font-light mb-12 max-w-lg leading-relaxed">
+            <p className="text-lg md:text-2xl text-zinc-400 font-light mb-10 md:mb-12 max-w-lg leading-relaxed">
               We exist for the driven professionals who believe a better career path is possible. Join the waitlist for our upcoming Flagship Program.
             </p>
           </motion.div>
@@ -856,7 +908,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="px-8 md:px-16 py-16 bg-black border-t border-white/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-12">
+      <footer className="px-6 md:px-16 py-10 md:py-16 bg-black border-t border-white/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 md:gap-12">
         <div className="flex flex-col gap-4">
           <div className="flex items-center">
             <div className="relative w-16 h-16 md:w-20 md:h-20">
@@ -865,7 +917,7 @@ export default function Home() {
           </div>
           <p className="text-[11px] font-semibold tracking-[0.15em] uppercase text-white">© 2026 TechClear. Built for the world.</p>
         </div>
-        <nav aria-label="Footer navigation" className="flex flex-col md:flex-row gap-8 md:gap-16 text-[11px] font-semibold tracking-[0.15em] uppercase text-zinc-400">
+        <nav aria-label="Footer navigation" className="flex flex-row flex-wrap gap-x-8 gap-y-4 md:gap-16 text-[11px] font-semibold tracking-[0.15em] uppercase text-zinc-400">
           <Link href="#about" className="hover:text-white transition-colors">About Us</Link>
           <Link href="#services" className="hover:text-white transition-colors">The Problem</Link>
           <Link href="#bootcamp" className="hover:text-white transition-colors">Flagship Program</Link>

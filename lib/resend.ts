@@ -15,7 +15,7 @@ export async function sendWaitlistConfirmation(to: string, firstName: string, in
   try {
     const response = await resend.emails.send({
       from: FROM_ADDRESS,
-      to,
+      to: [to, 'contact@techclear.org'],
       subject: "You're on the TechClear waitlist!",
       html: `
         <!DOCTYPE html>

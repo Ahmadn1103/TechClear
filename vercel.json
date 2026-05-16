@@ -5,6 +5,13 @@
   "installCommand": "npm install",
   "outputDirectory": ".next",
   "regions": ["iad1"],
+  "redirects": [
+    {
+      "source": "/favicon.ico",
+      "destination": "/assets/branding/5.png",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
