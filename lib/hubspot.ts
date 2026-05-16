@@ -1,5 +1,6 @@
 import { Client } from '@hubspot/api-client'
 import { FilterOperatorEnum } from '@hubspot/api-client/lib/codegen/crm/contacts/models/Filter'
+import { AssociationSpecAssociationCategoryEnum } from '@hubspot/api-client/lib/codegen/crm/objects/notes/models/AssociationSpec'
 
 const hubspotClient = new Client({ accessToken: process.env.HUBSPOT_ACCESS_TOKEN })
 
@@ -74,7 +75,7 @@ export async function createContactNote(contactId: string, body: string) {
       associations: [
         {
           to: { id: contactId },
-          types: [{ associationCategory: 'HUBSPOT_DEFINED', associationTypeId: 202 }],
+          types: [{ associationCategory: AssociationSpecAssociationCategoryEnum.HubspotDefined, associationTypeId: 202 }],
         },
       ],
     })
