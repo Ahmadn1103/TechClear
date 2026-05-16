@@ -35,8 +35,11 @@ export async function POST(req: NextRequest) {
       console.log('[HubSpot] Note added for contact:', contactId)
     }
 
-    await sendWaitlistConfirmation(email, firstName, interest)
-    await sendInternalNotification({ firstName, email, phone, interest })
+    // Email failures are non-fatal — HubSpot contact creation is the critical step
+    await Promise.allSettled([
+      sendWaitlistConfirmation(email, firstName, interest),
+      sendInternalNotification({ firstName, email, phone, interest }),
+    ])
 
     return NextResponse.json({ success: true })
   } catch (error) {

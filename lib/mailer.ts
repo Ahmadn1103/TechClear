@@ -1,19 +1,13 @@
-import nodemailer from 'nodemailer'
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
+
+const FROM_ADDRESS = process.env.RESEND_FROM_EMAIL ?? 'onboarding@resend.dev'
 
 const INTEREST_LABELS: Record<string, string> = {
   bootcamp: 'PM + AI Flagship Program',
   general: 'General Updates',
 }
-
-const transporter = nodemailer.createTransport({
-  host: 'smtp-relay.brevo.com',
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.BREVO_SMTP_LOGIN,
-    pass: process.env.BREVO_SMTP_PASSWORD,
-  },
-})
 
 export async function sendInternalNotification(data: {
   firstName: string
@@ -23,9 +17,9 @@ export async function sendInternalNotification(data: {
 }) {
   const interestLabel = data.interest ? (INTEREST_LABELS[data.interest] ?? data.interest) : 'Not specified'
 
-  await transporter.sendMail({
-    from: 'TechClear <contact@techclear.org>',
-    to: 'abdullah.r52@gmail.com, contact@techclear.org',
+  await resend.emails.send({
+    from: FROM_ADDRESS,
+    to: ['abdullah.r52@gmail.com', 'contact@techclear.org'],
     subject: `New Waitlist Signup — ${data.firstName}`,
     html: `
       <!DOCTYPE html>
@@ -62,5 +56,5 @@ export async function sendInternalNotification(data: {
     `,
   })
 
-  console.log('[Brevo SMTP] Internal notification sent to contact@techclear.org')
+  console.log('[Resend] Internal notification sent')
 }
