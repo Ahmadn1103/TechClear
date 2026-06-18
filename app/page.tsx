@@ -784,7 +784,7 @@ export default function Home() {
                       id="wl-firstname"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent transition-all font-light text-lg rounded-none text-white cursor-none"
+                      className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent font-light text-lg rounded-none text-white cursor-none"
                       required
                       disabled={formState === "loading"}
                     />
@@ -796,7 +796,7 @@ export default function Home() {
                       id="wl-lastname"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
-                      className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent transition-all font-light text-lg rounded-none text-white cursor-none"
+                      className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent font-light text-lg rounded-none text-white cursor-none"
                       disabled={formState === "loading"}
                     />
                   </div>
@@ -808,7 +808,7 @@ export default function Home() {
                     id="wl-email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent transition-all font-light text-lg rounded-none text-white cursor-none"
+                    className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent font-light text-lg rounded-none text-white cursor-none"
                     required
                     disabled={formState === "loading"}
                   />
@@ -820,7 +820,7 @@ export default function Home() {
                     id="wl-phone"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent transition-all font-light text-lg rounded-none text-white cursor-none"
+                    className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent font-light text-lg rounded-none text-white cursor-none"
                     disabled={formState === "loading"}
                   />
                 </div>
@@ -830,7 +830,7 @@ export default function Home() {
                     id="wl-interest"
                     value={interest}
                     onChange={(e) => setInterest(e.target.value)}
-                    className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-black text-white transition-all appearance-none font-light text-lg rounded-none cursor-none"
+                    className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-black text-white appearance-none font-light text-lg rounded-none cursor-none"
                     required
                     disabled={formState === "loading"}
                   >
@@ -851,11 +851,11 @@ export default function Home() {
                 <button
                   type="submit"
                   disabled={formState === "loading"}
-                  className="w-full bg-white text-black px-8 py-6 font-bold text-[13px] tracking-[0.15em] uppercase hover:bg-zinc-200 transition-colors mt-4 flex justify-between items-center group rounded-none cursor-none disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full bg-white text-black px-8 py-6 font-bold text-[13px] tracking-[0.15em] uppercase hover:bg-zinc-200 mt-4 flex justify-between items-center rounded-none cursor-none disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   <span>{formState === "loading" ? "Submitting..." : "Join Waitlist"}</span>
                   {formState !== "loading" && (
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-5 h-5" />
                   )}
                 </button>
               </form>
