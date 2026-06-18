@@ -720,12 +720,7 @@ export default function Home() {
         </div>
 
         <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 relative z-10">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={mounted ? { opacity: 1 } : {}}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.8 }}
-          >
+          <div>
             <span className="inline-block border border-white/30 text-sm md:text-base font-bold tracking-[0.2em] uppercase px-5 py-2 mb-8 text-zinc-200">
               Contact
             </span>
@@ -750,14 +745,9 @@ export default function Home() {
                 Scan to join<br />the waitlist
               </p>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={mounted ? { opacity: 1 } : {}}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
+          <div>
             {formState === "success" ? (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -870,7 +860,7 @@ export default function Home() {
                 </button>
               </form>
             )}
-          </motion.div>
+          </div>
         </div>
       </section>
 
