@@ -7,16 +7,23 @@ const INTERNAL_NOTIFICATION_EMAIL = 'abdullah.r52@gmail.com'
 
 const INTEREST_LABELS: Record<string, string> = {
   bootcamp: 'PM + AI Flagship Program',
+  enrollment: 'Enrollment Question',
+  pricing: 'Pricing & Payment',
+  cohort: 'Cohort Schedule / In-person Kickoff',
+  curriculum: 'Curriculum & Certification',
+  partnership: 'Partnership / Corporate Inquiry',
+  support: 'Technical Support',
+  other: 'Other',
   general: 'General Updates',
 }
 
 export async function sendWaitlistConfirmation(to: string, firstName: string, interest?: string) {
-  const interestLabel = interest ? (INTEREST_LABELS[interest] ?? interest) : 'TechClear programs'
+  const interestLabel = interest ? (INTEREST_LABELS[interest] ?? interest) : 'your message'
   try {
     const response = await resend.emails.send({
       from: FROM_ADDRESS,
       to: [to, 'contact@techclear.org'],
-      subject: "You're on the TechClear waitlist!",
+      subject: "We've received your message — TechClear",
       html: `
         <!DOCTYPE html>
         <html>
@@ -25,11 +32,9 @@ export async function sendWaitlistConfirmation(to: string, firstName: string, in
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           </head>
           <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-            <h2 style="color: #1a1a2e;">Hey ${firstName},</h2>
-            <p>You're officially on the <strong>TechClear — ${interestLabel}</strong> waitlist!</p>
-            <p>We're thrilled to have you. When a spot opens up, you'll be among the first to hear about enrollment dates, cohort details, and early-bird pricing.</p>
-            <p>In the meantime, keep an eye on your inbox — we'll be sending you updates, resources, and more as we get closer to launch.</p>
-            <p>Have questions? Just reply to this email and we'll get back to you.</p>
+            <h2 style="color: #1a1a2e;">Hi ${firstName},</h2>
+            <p>Thanks for reaching out to <strong>TechClear</strong>. We've received your message regarding <strong>${interestLabel}</strong>, and our team will get back to you shortly.</p>
+            <p>If your inquiry is time-sensitive, you can reply directly to this email and we'll prioritize it.</p>
             <br />
             <p>Talk soon,</p>
             <p><strong>The TechClear Team</strong></p>
@@ -168,7 +173,7 @@ export async function sendWaitlistNotification(data: {
     const response = await resend.emails.send({
       from: FROM_ADDRESS,
       to: INTERNAL_NOTIFICATION_EMAIL,
-      subject: `New Waitlist Signup — ${data.firstName}`,
+      subject: `New Contact Submission — ${data.firstName}`,
       html: `
         <!DOCTYPE html>
         <html>
@@ -177,8 +182,8 @@ export async function sendWaitlistNotification(data: {
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           </head>
           <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-            <h2 style="color: #1a1a2e;">New Waitlist Signup</h2>
-            <p>Someone just joined the TechClear waitlist.</p>
+            <h2 style="color: #1a1a2e;">New Contact Submission</h2>
+            <p>Someone just submitted the TechClear contact form.</p>
             <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
               <tr style="background-color: #f4f4f4;">
                 <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Name</td>
@@ -196,7 +201,7 @@ export async function sendWaitlistNotification(data: {
               ${data.interest ? `
               <tr>
                 <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Area of Interest</td>
-                <td style="padding: 10px; border: 1px solid #ddd;">${data.interest === 'bootcamp' ? 'PM + AI Flagship Program' : 'General Updates'}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">${INTEREST_LABELS[data.interest] ?? data.interest}</td>
               </tr>` : ''}
             </table>
             <p><a href="https://app.hubspot.com" style="color: #1a1a2e; font-weight: bold;">View in HubSpot →</a></p>

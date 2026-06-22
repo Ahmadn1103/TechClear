@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TechClear — Engineering Handoff</title>
+<style>
+  :root {
+    --bg: #050505;
+    --bg-alt: #0a0a0a;
+    --fg: #f4f4f5;
+    --muted: #a1a1aa;
+    --dim: #71717a;
+    --line: rgba(255,255,255,0.10);
+    --line-soft: rgba(255,255,255,0.06);
+    --accent: #ffffff;
+    --warn: #fbbf24;
+    --danger: #f87171;
+    --ok: #4ade80;
+    --serif: ui-serif, "Playfair Display", Georgia, serif;
+    --sans: ui-sans-serif, "Inter", system-ui, -apple-system, sans-serif;
+    --mono: ui-monospace, "JetBrains Mono", "Fira Code", Menlo, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    height: 100%;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  body { font-size: 16px; line-height: 1.55; }
+
+  /* SLIDE FRAME */
+  .deck {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+  }
+  .slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+    padding: 60px 80px 100px;
+    overflow-y: auto;
+    position: relative;
+  }
+  .slide.active { display: block; }
+
+  /* SHARED */
+  .eyebrow {
+    display: inline-block;
+    border: 1px solid rgba(255,255,255,0.30);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    color: #d4d4d8;
+    margin-bottom: 28px;
+  }
+  h1.title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(40px, 6vw, 80px);
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    margin-bottom: 24px;
+  }
+  h1.title em { font-style: italic; color: #d4d4d8; }
+  h2.section-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(32px, 4vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+  h2.section-title em { font-style: italic; color: #d4d4d8; }
+  .lede {
+    font-size: 19px;
+    color: var(--muted);
+    max-width: 880px;
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+  .lede strong { color: var(--fg); font-weight: 500; }
+  .grid {
+    display: grid;
+    gap: 16px;
+  }
+  .grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+  .card {
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,0.02);
+    padding: 22px 24px;
+  }
+  .card h3 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .card p { color: var(--fg); font-size: 15px; }
+  .card .big {
+    font-family: var(--serif);
+    font-size: 36px;
+    line-height: 1.05;
+    margin-bottom: 8px;
+  }
+  .kv {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 10px 24px;
+    font-size: 15px;
+  }
+  .kv dt { color: var(--muted); font-weight: 500; }
+  .kv dd { color: var(--fg); }
+  code, .mono {
+    font-family: var(--mono);
+    font-size: 13px;
+    background: rgba(255,255,255,0.06);
+    padding: 2px 7px;
+    border: 1px solid var(--line);
+  }
+  pre {
+    font-family: var(--mono);
+    font-size: 13px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--line);
+    padding: 18px 22px;
+    overflow-x: auto;
+    line-height: 1.6;
+    color: #e4e4e7;
+  }
+  pre .c { color: #71717a; }     /* comment */
+  pre .k { color: #93c5fd; }     /* keyword */
+  pre .s { color: #fcd34d; }     /* string */
+  pre .v { color: #f4f4f5; }     /* value */
+  ul.bullets { list-style: none; padding: 0; }
+  ul.bullets li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 12px;
+    font-size: 15px;
+    color: var(--fg);
+    line-height: 1.55;
+  }
+  ul.bullets li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 6px;
+    height: 6px;
+    background: var(--fg);
+    border-radius: 50%;
+  }
+  ul.bullets li small { color: var(--muted); font-size: 13px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  th, td {
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  th {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  td.mono { font-family: var(--mono); font-size: 13px; background: none; padding: 12px 14px; border: 0; border-bottom: 1px solid var(--line); }
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border: 1px solid currentColor;
+  }
+  .pill.ok    { color: var(--ok); }
+  .pill.warn  { color: var(--warn); }
+  .pill.bad   { color: var(--danger); }
+  .pill.muted { color: var(--muted); }
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 24px;
+  }
+  .flow-step {
+    border-left: 2px solid var(--fg);
+    padding: 14px 22px;
+    background: rgba(255,255,255,0.02);
+  }
+  .flow-step .num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+  }
+  .flow-step .what {
+    font-size: 16px;
+    margin-top: 4px;
+  }
+  .flow-step .where {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--dim);
+    margin-top: 4px;
+  }
+  .callout {
+    border-left: 3px solid var(--warn);
+    background: rgba(251, 191, 36, 0.05);
+    padding: 16px 22px;
+    margin: 20px 0;
+    font-size: 14px;
+    color: #fef3c7;
+  }
+  .callout.danger {
+    border-left-color: var(--danger);
+    background: rgba(248, 113, 113, 0.06);
+    color: #fecaca;
+  }
+  .callout strong { color: #fff; }
+
+  /* NAV */
+  .nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line);
+    z-index: 100;
+  }
+  .nav-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .nav-info .brand { color: var(--fg); font-weight: 700; }
+  .nav-controls { display: flex; gap: 6px; align-items: center; }
+  .nav-btn {
+    background: transparent;
+    color: var(--fg);
+    border: 1px solid var(--line);
+    padding: 7px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: var(--sans);
+  }
+  .nav-btn:hover { background: var(--fg); color: #000; }
+  .counter {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    padding: 0 10px;
+    min-width: 70px;
+    text-align: center;
+  }
+
+  /* TITLE SLIDE */
+  .slide.title-slide {
+    display: none;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 80px 100px;
+  }
+  .slide.title-slide.active { display: flex; flex-direction: column; justify-content: center; }
+  .slide.title-slide h1 {
+    font-family: var(--serif);
+    font-size: clamp(56px, 10vw, 140px);
+    line-height: 0.95;
+    margin-bottom: 24px;
+  }
+  .slide.title-slide .sub {
+    font-size: 22px;
+    color: var(--muted);
+    max-width: 720px;
+    line-height: 1.5;
+  }
+  .slide.title-slide .meta {
+    margin-top: 60px;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  /* DIVIDER SLIDE */
+  .slide.divider {
+    display: none;
+    align-items: center;
+    padding: 0 80px 100px;
+  }
+  .slide.divider.active { display: flex; flex-direction: column; justify-content: center; }
+  .slide.divider .chapter-num {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+  .slide.divider h1 {
+    font-family: var(--serif);
+    font-size: clamp(48px, 8vw, 120px);
+    line-height: 0.95;
+    max-width: 1100px;
+  }
+  .slide.divider h1 em { font-style: italic; color: #a1a1aa; }
+
+  /* COMPACT */
+  .small { font-size: 13px; color: var(--muted); }
+  .file { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+  /* PRINT */
+  @media print {
+    html, body { overflow: visible; height: auto; }
+    .deck { position: static; display: block; }
+    .slide { display: block !important; height: auto; min-height: 100vh; page-break-after: always; padding: 50px 60px; overflow: visible; }
+    .slide.title-slide, .slide.divider { display: flex !important; min-height: 100vh; }
+    .nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- 1. TITLE -->
+  <section class="slide title-slide active">
+    <div class="eyebrow">Engineering Handoff · TechClear</div>
+    <h1><em>TechClear</em><br/>Landing &amp; Enrollment Platform</h1>
+    <p class="sub">A complete technical handoff for the Next.js 16 site at <code>techclear.org</code>. Covers architecture, integrations, data flow, deployment, and the open work for whoever owns this codebase next.</p>
+    <div class="meta">Prepared 2026 · Next.js 16.2.6 · React 19 · Tailwind 4</div>
+  </section>
+
+  <!-- 2. WHAT THIS IS -->
+  <section class="slide">
+    <span class="eyebrow">01 · The Product</span>
+    <h2 class="section-title">What <em>TechClear</em> is.</h2>
+    <p class="lede">A marketing landing site + lead-capture + enrollment platform for the <strong>PM + AI Flagship Program</strong> — an 8-week IT workforce training course that combines SAFe Scrum Master 6.0 certification with hands-on AI tooling.</p>
+
+    <div class="grid cols-3">
+      <div class="card">
+        <h3>The Course</h3>
+        <p class="big">8 weeks</p>
+        <p>Cohort-based, SAFe SSM 6.0 certification included, in-person kickoff in Tysons, VA.</p>
+      </div>
+      <div class="card">
+        <h3>Price</h3>
+        <p class="big">$3,000</p>
+        <p>One-time payment. Promotion codes enabled. No installments.</p>
+      </div>
+      <div class="card">
+        <h3>Launch</h3>
+        <p class="big">July 6, 2026</p>
+        <p>First cohort kickoff date TBA. Announced site-wide in the top banner + hero block.</p>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 36px;">
+      <strong>One-line summary:</strong> A single-page Next.js site that captures inquiries into HubSpot, takes payments via Stripe (and Whop in future), and sends confirmation emails via Resend. Everything funnels into HubSpot as the system of record.
+    </div>
+  </section>
+
+  <!-- 3. STACK AT A GLANCE -->
+  <section class="slide">
+    <span class="eyebrow">02 · The Stack</span>
+    <h2 class="section-title">Stack at a <em>glance</em>.</h2>
+    <p class="lede">Everything you need to know to run the project locally on day one.</p>
+
+    <div class="grid cols-2" style="margin-bottom: 28px;">
+      <div class="card">
+        <h3>Framework &amp; Runtime</h3>
+        <dl class="kv" style="grid-template-columns: 140px 1fr;">
+          <dt>Next.js</dt><dd>16.2.6 (App Router)</dd>
+          <dt>React</dt><dd>19.2.4</dd>
+          <dt>TypeScript</dt><dd>5</dd>
+          <dt>Tailwind CSS</dt><dd>4 (via @tailwindcss/postcss)</dd>
+          <dt>Animations</dt><dd>Framer Motion 12.38</dd>
+        </dl>
+      </div>
+      <div class="card">
+        <h3>Integration SDKs</h3>
+        <dl class="kv" style="grid-template-columns: 140px 1fr;">
+          <dt>HubSpot</dt><dd>@hubspot/api-client 13.5</dd>
+          <dt>Stripe</dt><dd>stripe 22.1</dd>
+          <dt>Email</dt><dd>resend 6.12</dd>
+          <dt>Icons</dt><dd>lucide-react</dd>
+          <dt>QR</dt><dd>qrcode.react (currently hidden)</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Run It</h3>
+      <pre><span class="c"># install</span>
+npm install
+
+<span class="c"># dev server — http://localhost:3000</span>
+npm run dev
+
+<span class="c"># production build + start</span>
+npm run build &amp;&amp; npm run start
+
+<span class="c"># lint</span>
+npm run lint</pre>
+    </div>
+
+    <div class="callout">
+      <strong>Read this first:</strong> <code>AGENTS.md</code> warns that Next.js 16 has breaking changes from older versions. Check <code>node_modules/next/dist/docs/</code> before assuming Next.js conventions you know from 13/14/15 still apply.
+    </div>
+  </section>
+
+  <!-- 4. DIVIDER — ARCHITECTURE -->
+  <section class="slide divider">
+    <div class="chapter-num">CHAPTER ONE</div>
+    <h1>How the <em>code</em> is organized.</h1>
+  </section>
+
+  <!-- 5. FILE STRUCTURE -->
+  <section class="slide">
+    <span class="eyebrow">03 · Layout</span>
+    <h2 class="section-title">Project <em>layout</em>.</h2>
+    <p class="lede">Standard App Router layout. The bulk of the site lives in a single <code>app/page.tsx</code> file (~1000 lines) — everything you see is sections inside that one component.</p>
+
+    <pre>tech_clear/
+├── app/
+│   ├── layout.tsx              <span class="c"># root layout, fonts, metadata, custom cursor mount</span>
+│   ├── page.tsx                <span class="c"># entire landing page, all sections + waitlist form</span>
+│   ├── globals.css             <span class="c"># Tailwind 4 @theme, custom cursor CSS, scrollbar</span>
+│   ├── register/
+│   │   ├── page.tsx            <span class="c"># redirects directly to Stripe Payment Link</span>
+│   │   └── success/page.tsx    <span class="c"># post-payment confirmation page</span>
+│   └── api/
+│       ├── waitlist/route.ts   <span class="c"># POST — contact form intake → HubSpot + Resend</span>
+│       ├── contact/route.ts    <span class="c"># POST — defined but not wired to any form</span>
+│       └── webhooks/stripe/route.ts <span class="c"># POST — Stripe → HubSpot upgrade + receipt</span>
+├── components/
+│   └── CustomCursor.tsx        <span class="c"># animated glow + ring + dot cursor (desktop)</span>
+├── lib/
+│   ├── hubspot.ts              <span class="c"># createOrUpdateContact, createContactNote, addContactToList</span>
+│   ├── resend.ts               <span class="c"># all email templates (waitlist / enrollment / contact)</span>
+│   ├── mailer.ts               <span class="c"># internal-notification mailer (separate from resend.ts)</span>
+│   └── stripe.ts               <span class="c"># createCheckoutSession — dead code, Payment Link in use</span>
+├── public/assets/
+│   ├── branding/               <span class="c"># 1.png (logo), 5.png (favicon), og-image.png MISSING</span>
+│   └── images/                 <span class="c"># bootcamp.png, problem.png</span>
+├── docs/                       <span class="c"># this deck lives here</span>
+├── CLAUDE.md                   <span class="c"># project context — keep this current</span>
+├── AGENTS.md                   <span class="c"># Next.js 16 warning</span>
+└── next.config.ts              <span class="c"># reactStrictMode: false (prevents anim double-fire)</span></pre>
+  </section>
+
+  <!-- 6. PAGE SECTIONS -->
+  <section class="slide">
+    <span class="eyebrow">04 · The Landing Page</span>
+    <h2 class="section-title">Sections of <em>app/page.tsx</em>.</h2>
+    <p class="lede">All the sections you see, in order. Each anchors to a <code>#id</code> that the nav scrolls to.</p>
+
+    <table>
+      <thead>
+        <tr><th>#</th><th>Section</th><th>What's there</th><th>State</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>—</td><td>Launch banner</td><td>White strip pinned above nav: "Program launches July 6, 2026 · In-person in Tysons, VA"</td><td><span class="pill ok">Live</span></td></tr>
+        <tr><td>—</td><td>Navigation</td><td>Logo + About / Solution / Program / Contact + Enroll button (→ Whop)</td><td><span class="pill ok">Live</span></td></tr>
+        <tr><td>#hero</td><td>Hero</td><td>"Build with intention" headline, 3 CTAs, animated diagonal grid + orbs, prominent launch-date callout</td><td><span class="pill ok">Live</span></td></tr>
+        <tr><td>#about</td><td>About / Mission / Vision</td><td>Three text cards, no CTAs</td><td><span class="pill ok">Live</span></td></tr>
+        <tr><td>#services</td><td>Our Solution</td><td>3 pain points + 4 feature cards</td><td><span class="pill ok">Live</span></td></tr>
+        <tr><td>#bootcamp</td><td>Flagship Program</td><td>8-week program detail, bootcamp image, two program-detail boxes (launch date + Tysons kickoff)</td><td><span class="pill ok">Live</span></td></tr>
+        <tr><td>#enroll</td><td>Pricing card</td><td>$3,000 card, "Enroll Now" → /register</td><td><span class="pill warn">Hidden</span></td></tr>
+        <tr><td>—</td><td>Early Access QR strip</td><td>Standalone QR section between Enroll and Contact</td><td><span class="pill warn">Commented</span></td></tr>
+        <tr><td>#waitlist</td><td>Contact form</td><td>firstName / lastName / email / phone / interest dropdown / message textarea — labelled as "Contact us" (not waitlist)</td><td><span class="pill ok">Live</span></td></tr>
+        <tr><td>—</td><td>Footer</td><td>Logo, copyright, mirror of nav links</td><td><span class="pill ok">Live</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Hidden vs. commented:</strong> The pricing card uses a <code>{false &amp;&amp; ...}</code> wrapper — flip the <code>false</code> to <code>true</code> to restore. The QR section uses a JSX block comment — remove the <code>{/*</code> and <code>*/}</code> delimiters.
+    </div>
+  </section>
+
+  <!-- 7. STYLE SYSTEM -->
+  <section class="slide">
+    <span class="eyebrow">05 · Design System</span>
+    <h2 class="section-title">The <em>visual language</em>.</h2>
+    <p class="lede">Sharp, black, editorial. Intentional design choices that show up everywhere in the codebase — match them when you add new sections.</p>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <h3>Typography</h3>
+        <ul class="bullets">
+          <li><strong>Playfair Display</strong> — all headings, italic accents for emphasis</li>
+          <li><strong>Inter</strong> — all body copy, labels, buttons</li>
+          <li>Labels use <code>tracking-[0.2em] uppercase text-[10px]</code> in bordered pills</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Color</h3>
+        <ul class="bullets">
+          <li>Background: pure black <code>#000</code></li>
+          <li>Section alternates: <code>#050505</code>, <code>#020202</code></li>
+          <li>Text: <code>#f4f4f5</code> primary, zinc-300/400/500 secondary</li>
+          <li>No brand color — white is the accent</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Shape</h3>
+        <ul class="bullets">
+          <li><code>rounded-none</code> everywhere — no border radius, intentionally sharp</li>
+          <li>Three button levels: solid white, outlined white, dim outline</li>
+          <li>Cards: hairline borders <code>border-white/15</code> on near-black backgrounds</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Motion</h3>
+        <ul class="bullets">
+          <li>Framer Motion for everything animated</li>
+          <li><code>mounted</code> state guard prevents hydration double-fire on mobile</li>
+          <li><code>whileInView</code> with <code>amount: 0.2</code> threshold for scroll triggers</li>
+          <li>Easing: <code>[0.16, 1, 0.3, 1]</code> cubic bezier</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 28px;">
+      <strong>Custom cursor:</strong> Desktop-only animated cursor (glow + ring + dot) lives in <code>components/CustomCursor.tsx</code>. Disabled on <code>/register</code> via a <code>.no-custom-cursor</code> class. Hidden automatically on touch devices.
+    </div>
+  </section>
+
+  <!-- 8. DIVIDER — INTEGRATIONS -->
+  <section class="slide divider">
+    <div class="chapter-num">CHAPTER TWO</div>
+    <h1>The <em>integrations</em>.</h1>
+  </section>
+
+  <!-- 9. INTEGRATIONS OVERVIEW -->
+  <section class="slide">
+    <span class="eyebrow">06 · Integrations</span>
+    <h2 class="section-title">Three live services. <em>One</em> in transition.</h2>
+
+    <table>
+      <thead>
+        <tr><th>Service</th><th>What it does</th><th>Where it's wired</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>HubSpot CRM</strong></td>
+          <td>System of record — every contact, every payment, every note</td>
+          <td><code>lib/hubspot.ts</code></td>
+          <td><span class="pill ok">Live</span></td>
+        </tr>
+        <tr>
+          <td><strong>Stripe</strong></td>
+          <td>Payment processor — $3,000 one-time charge via hosted Payment Link</td>
+          <td><code>app/api/webhooks/stripe/route.ts</code></td>
+          <td><span class="pill ok">Live</span></td>
+        </tr>
+        <tr>
+          <td><strong>Resend</strong></td>
+          <td>Email — confirmations, receipts, internal notifications</td>
+          <td><code>lib/resend.ts</code>, <code>lib/mailer.ts</code></td>
+          <td><span class="pill ok">Live</span></td>
+        </tr>
+        <tr>
+          <td><strong>Whop</strong></td>
+          <td>Hosted course content + access control</td>
+          <td>Hardcoded URLs in nav/footer Enroll buttons</td>
+          <td><span class="pill ok">Live</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout" style="margin-top: 28px;">
+      <strong>Why two payment paths exist right now:</strong> Stripe is live and battle-tested. Whop is the planned long-term home (it hosts content + gates access in one place), but a $2,500 transaction cap on new Whop accounts blocked product creation. Verify the Whop account → request a limit raise → swap the Enroll buttons to the Whop checkout URL. Stripe stays as fallback.
+    </div>
+  </section>
+
+  <!-- 10. HUBSPOT -->
+  <section class="slide">
+    <span class="eyebrow">07 · HubSpot</span>
+    <h2 class="section-title">HubSpot is the <em>system of record</em>.</h2>
+    <p class="lede">Every form submission and every payment lands here. If something writes to HubSpot and that write fails, the user gets an error. Everything else (emails, notes) is best-effort.</p>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <h3>Functions — lib/hubspot.ts</h3>
+        <ul class="bullets">
+          <li><code>createOrUpdateContact()</code><br/><small>Idempotent: tries create, on 409 conflict searches by email + updates. Sets email, firstname, lastname, phone, lifecyclestage, hs_lead_status.</small></li>
+          <li><code>createContactNote()</code><br/><small>Creates a HubSpot note object, attaches it to the contact via association type 202.</small></li>
+          <li><code>addContactToList()</code><br/><small>Defined but currently unused.</small></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Lifecycle State</h3>
+        <table style="font-size: 13px;">
+          <thead><tr><th>Trigger</th><th>Stage</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Form submit</td><td>lead</td><td>NEW</td></tr>
+            <tr><td>Stripe payment</td><td>customer</td><td>CONNECTED</td></tr>
+          </tbody>
+        </table>
+        <p class="small" style="margin-top: 16px;">Lead → customer transition happens automatically via the Stripe webhook when payment succeeds.</p>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 24px;">
+      <strong>Env var:</strong> <code>HUBSPOT_ACCESS_TOKEN</code> — Personal Access Token from HubSpot dashboard. Required scope: <em>crm.objects.contacts.read/write</em>, <em>crm.objects.notes.read/write</em>.
+    </div>
+  </section>
+
+  <!-- 11. STRIPE -->
+  <section class="slide">
+    <span class="eyebrow">08 · Stripe</span>
+    <h2 class="section-title">Stripe — <em>Payment Link</em> approach.</h2>
+    <p class="lede">We don't create checkout sessions via API. We use a hosted Payment Link, redirect users to it, and listen for the resulting webhook. Simpler, no session lifecycle to manage.</p>
+
+    <div class="card" style="margin-bottom: 20px;">
+      <h3>Payment Link</h3>
+      <p class="mono" style="font-size: 14px; word-break: break-all;">https://buy.stripe.com/6oU14mgs2bIogALaim7wA01</p>
+      <p style="margin-top: 12px;">Hardcoded in <code>app/register/page.tsx</code>. Promotion codes enabled in the Stripe Dashboard on the Link itself.</p>
+    </div>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <h3>Webhook — what gets received</h3>
+        <ul class="bullets">
+          <li>Event: <code>checkout.session.completed</code></li>
+          <li>Signature verified with <code>STRIPE_WEBHOOK_SECRET</code></li>
+          <li>Session retrieved with <code>expand: ['line_items']</code></li>
+          <li>Extracted: email, fullName, phone, amount_total, line item description</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>What happens after</h3>
+        <ul class="bullets">
+          <li>HubSpot contact upgraded to <code>customer</code> / <code>CONNECTED</code></li>
+          <li>HubSpot note: "Payment received — [product] · $3,000.00 · Phone: [...]"</li>
+          <li>Receipt email sent to customer</li>
+          <li>Internal notification email to team</li>
+          <li>Always returns 200 to Stripe — email failures don't fail the webhook</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 24px;">
+      <strong>Dashboard config required:</strong> In Stripe Dashboard → Developers → Webhooks, register endpoint <code>https://techclear.io/api/webhooks/stripe</code> for the <code>checkout.session.completed</code> event. Copy the signing secret into <code>STRIPE_WEBHOOK_SECRET</code>.
+    </div>
+  </section>
+
+  <!-- 12. RESEND -->
+  <section class="slide">
+    <span class="eyebrow">09 · Resend</span>
+    <h2 class="section-title">Email via <em>Resend</em>.</h2>
+    <p class="lede">All transactional email runs through Resend. Domain <code>techclear.org</code> is verified — emails send from <code>contact@techclear.org</code>.</p>
+
+    <table>
+      <thead>
+        <tr><th>Function</th><th>When it fires</th><th>To</th><th>Subject</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>sendWaitlistConfirmation</code></td>
+          <td>Contact form submitted</td>
+          <td>User + contact@</td>
+          <td>"We've received your message — TechClear"</td>
+        </tr>
+        <tr>
+          <td><code>sendInternalNotification</code><br/><span class="file">lib/mailer.ts</span></td>
+          <td>Contact form submitted</td>
+          <td>abdullah.r52@gmail.com + contact@</td>
+          <td>"New Contact Submission — [name]"</td>
+        </tr>
+        <tr>
+          <td><code>sendEnrollmentReceipt</code></td>
+          <td>Stripe payment completed</td>
+          <td>Customer</td>
+          <td>"Welcome to TechClear — Enrollment Confirmed"</td>
+        </tr>
+        <tr>
+          <td><code>sendEnrollmentNotification</code></td>
+          <td>Stripe payment completed</td>
+          <td>abdullah.r52@gmail.com + contact@</td>
+          <td>"New Enrollment — [name]"</td>
+        </tr>
+        <tr>
+          <td><code>sendContactNotification</code></td>
+          <td>(unused — defined for /api/contact route which has no UI)</td>
+          <td>abdullah.r52@gmail.com</td>
+          <td>"New TechClear Contact Form Submission"</td>
+        </tr>
+        <tr>
+          <td><code>sendWaitlistNotification</code></td>
+          <td>(unused — superseded by mailer.ts version)</td>
+          <td>—</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>The internal notification email recipient is hardcoded</strong> to <code>abdullah.r52@gmail.com</code> in both <code>lib/mailer.ts</code> and <code>lib/resend.ts</code>. Move it to an env var (e.g., <code>INTERNAL_NOTIFICATION_EMAIL</code>) when the owner changes.
+    </div>
+  </section>
+
+  <!-- 13. DIVIDER — DATA FLOWS -->
+  <section class="slide divider">
+    <div class="chapter-num">CHAPTER THREE</div>
+    <h1>What <em>happens</em> when a user...</h1>
+  </section>
+
+  <!-- 14. FLOW: WAITLIST -->
+  <section class="slide">
+    <span class="eyebrow">10 · Flow A</span>
+    <h2 class="section-title">...submits the <em>contact form</em>.</h2>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="num">STEP 01 · CLIENT</div>
+        <div class="what">User fills form (firstName + email required, rest optional) → <code>handleWaitlistSubmit</code> sends POST to <code>/api/waitlist</code></div>
+        <div class="where">app/page.tsx</div>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 02 · API VALIDATION</div>
+        <div class="what">Server checks firstName + email present, otherwise returns 400</div>
+        <div class="where">app/api/waitlist/route.ts</div>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 03 · HUBSPOT WRITE</div>
+        <div class="what">createOrUpdateContact with lifecyclestage='lead', leadStatus='NEW'. If contact exists (409), searches by email and updates instead.</div>
+        <div class="where">lib/hubspot.ts</div>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 04 · HUBSPOT NOTE</div>
+        <div class="what">If interest or message present, attaches a note: "Area of Interest: [label]\n\nMessage: [body]"</div>
+        <div class="where">lib/hubspot.ts</div>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 05 · EMAIL (NON-BLOCKING)</div>
+        <div class="what">Promise.allSettled fires two emails in parallel: user confirmation + internal notification. Failures here don't break the response.</div>
+        <div class="where">lib/resend.ts + lib/mailer.ts</div>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 06 · CLIENT FEEDBACK</div>
+        <div class="what">200 → formState = 'success' → renders "Thank you, [firstName]." card with reset button. 4xx/5xx → 'error' state with message.</div>
+        <div class="where">app/page.tsx</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15. FLOW: STRIPE -->
+  <section class="slide">
+    <span class="eyebrow">11 · Flow B</span>
+    <h2 class="section-title">...completes <em>payment</em>.</h2>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="num">STEP 01 · CLIENT</div>
+        <div class="what">User clicks "Enroll" → navigates to /register → that page immediately redirects to the Stripe Payment Link.</div>
+        <div class="where">app/register/page.tsx</div>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 02 · STRIPE HOSTED CHECKOUT</div>
+        <div class="what">User enters email, name, phone, card. Stripe handles 3DS, card validation, fraud checks, promo codes.</div>
+        <div class="where">stripe.com (hosted)</div>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 03 · WEBHOOK FIRES</div>
+        <div class="what">Stripe POSTs checkout.session.completed to /api/webhooks/stripe with signature header.</div>
+        <div class="where">stripe → /api/webhooks/stripe</div>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 04 · VERIFY + EXPAND</div>
+        <div class="what">Signature verified with STRIPE_WEBHOOK_SECRET. Session retrieved with expand:['line_items'] to get product details.</div>
+        <div class="where">app/api/webhooks/stripe/route.ts</div>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 05 · HUBSPOT UPGRADE</div>
+        <div class="what">createOrUpdateContact upgrades lifecyclestage='customer', leadStatus='CONNECTED'. Note attached with payment details.</div>
+        <div class="where">lib/hubspot.ts</div>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 06 · EMAILS</div>
+        <div class="what">Receipt to customer + internal notification to team. Same allSettled pattern — non-blocking.</div>
+        <div class="where">lib/resend.ts</div>
+      </div>
+      <div class="flow-step">
+        <div class="num">STEP 07 · RESPONSE</div>
+        <div class="what">Returns 200 to Stripe regardless of downstream errors (Stripe retries on non-200, so we always ack).</div>
+        <div class="where">app/api/webhooks/stripe/route.ts</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16. DIVIDER — OPS -->
+  <section class="slide divider">
+    <div class="chapter-num">CHAPTER FOUR</div>
+    <h1>Running it in <em>production</em>.</h1>
+  </section>
+
+  <!-- 17. ENV VARS -->
+  <section class="slide">
+    <span class="eyebrow">12 · Environment</span>
+    <h2 class="section-title">Environment <em>variables</em>.</h2>
+    <p class="lede">All five required vars live in <code>.env.local</code> (dev) and also in vercel environment variables. This is where you can find them.</p>
+
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Used by</th><th>Required?</th><th>Source</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="mono">HUBSPOT_ACCESS_TOKEN</td><td>lib/hubspot.ts</td><td><span class="pill bad">Yes</span></td><td>HubSpot → Settings → Private Apps</td></tr>
+        <tr><td class="mono">STRIPE_SECRET_KEY</td><td>app/api/webhooks/stripe</td><td><span class="pill bad">Yes</span></td><td>Stripe → Developers → API keys</td></tr>
+        <tr><td class="mono">STRIPE_WEBHOOK_SECRET</td><td>app/api/webhooks/stripe</td><td><span class="pill bad">Yes</span></td><td>Stripe → Developers → Webhooks → endpoint</td></tr>
+        <tr><td class="mono">RESEND_API_KEY</td><td>lib/resend.ts, lib/mailer.ts</td><td><span class="pill bad">Yes</span></td><td>Resend → API Keys</td></tr>
+        <tr><td class="mono">RESEND_FROM_EMAIL</td><td>lib/resend.ts, lib/mailer.ts</td><td><span class="pill warn">Recommended</span></td><td>Default: <code>contact@techclear.org</code></td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout danger" style="margin-top: 28px;">
+      <strong>CRITICAL — DO BEFORE ANYTHING ELSE:</strong><br/>
+      The current <code>.env.local</code> contains live production keys for HubSpot, Stripe, and Resend.<br/>
+      • Verify <code>.env.local</code> is in <code>.gitignore</code> and has never been committed.<br/>
+      • If it was committed: rotate <strong>all</strong> keys immediately on each provider's dashboard, then purge from git history with BFG or <code>git filter-repo</code>.<br/>
+      • Set up the same vars in Vercel (or your host) as project-level secrets, scoped to Production / Preview separately.
+    </div>
+  </section>
+
+  <!-- 18. DEPLOY -->
+  <section class="slide">
+    <span class="eyebrow">13 · Deploy</span>
+    <h2 class="section-title">Deployment <em>checklist</em>.</h2>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <h3>Hosting</h3>
+        <ul class="bullets">
+          <li>Designed for <strong>Vercel</strong> (Next.js native deployment target)</li>
+          <li><code>metadataBase</code> is set to <code>https://techclear.io</code> — production domain assumed</li>
+          <li>Email domain is <code>techclear.org</code> — keep these straight; the two TLDs are intentional</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>External Dashboards</h3>
+        <ul class="bullets">
+          <li><strong>Stripe:</strong> register webhook → <code>/api/webhooks/stripe</code> for <code>checkout.session.completed</code></li>
+          <li><strong>Resend:</strong> domain <code>techclear.org</code> already verified (was a DNS conflict with Gmail; resolved)</li>
+          <li><strong>HubSpot:</strong> Private App with contact + note read/write scopes</li>
+          <li><strong>Whop:</strong> account needs verification + transaction-cap raise above $2,500 before product can be created</li>
+        </ul>
+      </div>
+    </div>
+
+    <pre style="margin-top: 24px;"><span class="c"># pre-deploy sanity</span>
+npm run build              <span class="c"># must succeed locally first</span>
+npm run lint               <span class="c"># clean before push</span>
+
+<span class="c"># vercel deploy (if Vercel CLI installed)</span>
+vercel --prod
+
+<span class="c"># post-deploy smoke test</span>
+<span class="c"># 1. Hit / — verify page renders, hero animations play</span>
+<span class="c"># 2. Submit contact form — confirm HubSpot contact appears + you get the email</span>
+<span class="c"># 3. Use Stripe test card 4242 4242 4242 4242 — confirm webhook fires, HubSpot upgrades</span></pre>
+  </section>
+
+  <!-- 19. DIVIDER — KNOWN STATE -->
+  <section class="slide divider">
+    <div class="chapter-num">CHAPTER FIVE</div>
+    <h1>What's <em>open</em>.</h1>
+  </section>
+
+  <!-- 20. HIDDEN / DORMANT -->
+  <section class="slide">
+    <span class="eyebrow">14 · Hidden Code</span>
+    <h2 class="section-title">What's <em>turned off</em> right now.</h2>
+    <p class="lede">Code that's still in the repo but not visible on the live site. Restore by following the inline instructions in the source.</p>
+
+    <table>
+      <thead><tr><th>What</th><th>Where</th><th>How to restore</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Pricing card section (<code>#enroll</code>)</td>
+          <td>app/page.tsx ~line 610</td>
+          <td>Change <code>{false &amp;&amp;</code> → <code>{</code> and balance the brace</td>
+        </tr>
+        <tr>
+          <td>Desktop nav Enroll link</td>
+          <td>app/page.tsx ~line 101</td>
+          <td>Remove <code>{false &amp;&amp; ...}</code> wrapper</td>
+        </tr>
+        <tr>
+          <td>Mobile nav Enroll link</td>
+          <td>app/page.tsx ~line 141</td>
+          <td>Uncomment the array entry</td>
+        </tr>
+        <tr>
+          <td>Footer Enroll link</td>
+          <td>app/page.tsx ~line 957</td>
+          <td>Remove <code>{false &amp;&amp; ...}</code> wrapper</td>
+        </tr>
+        <tr>
+          <td>Early Access QR strip section</td>
+          <td>app/page.tsx ~lines 715–745</td>
+          <td>Remove <code>{/*</code> and <code>*/}</code> delimiters</td>
+        </tr>
+        <tr>
+          <td>QR code beside contact form</td>
+          <td>app/page.tsx (inside #waitlist)</td>
+          <td>Remove <code>{/*</code> and <code>*/}</code> delimiters</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout" style="margin-top: 28px;">
+      <strong>Why so much hidden code?</strong> The site originally launched with QR-driven waitlist signups and an inline pricing card. The product pivoted: payments moved to a hosted Stripe Payment Link, the QR was retired in favor of direct form submissions, and the inline enroll card was hidden because the nav button now goes straight to Whop. The dormant code is kept for fast restoration if the strategy shifts again.
+    </div>
+  </section>
+
+  <!-- 21. DEAD CODE -->
+  <section class="slide">
+    <span class="eyebrow">15 · Cleanup Candidates</span>
+    <h2 class="section-title">Code to <em>delete or document</em>.</h2>
+    <p class="lede">Files and functions that exist in the codebase but aren't reached from anywhere. Safe to remove, but worth a moment of consideration first — some are kept "just in case."</p>
+
+    <ul class="bullets">
+      <li><code>lib/stripe.ts</code> — <code>createCheckoutSession()</code> function. Replaced by hosted Payment Link. Unused. <small>Safe to delete entirely.</small></li>
+      <li><code>app/api/contact/route.ts</code> — A second contact endpoint, not wired to any form. The live form uses <code>/api/waitlist</code>. <small>Either wire a UI to it or delete.</small></li>
+      <li><code>sendWaitlistNotification()</code> in <code>lib/resend.ts</code> — Superseded by <code>sendInternalNotification()</code> in <code>lib/mailer.ts</code>. <small>Delete after confirming no callers.</small></li>
+      <li><code>sendContactNotification()</code> in <code>lib/resend.ts</code> — Only called by the orphaned <code>/api/contact</code> route. <small>Delete with the route.</small></li>
+      <li><code>addContactToList()</code> in <code>lib/hubspot.ts</code> — Defined but never called. <small>Keep if you plan to add list-based segmentation; otherwise delete.</small></li>
+      <li><code>BREVO_*</code> env vars (if still in <code>.env.local</code>) — Legacy email provider, replaced by Resend. <small>Delete.</small></li>
+    </ul>
+  </section>
+
+  <!-- 22. THE OG IMAGE -->
+  <section class="slide">
+    <span class="eyebrow">16 · Outstanding</span>
+    <h2 class="section-title">Open <em>punch list</em>.</h2>
+
+    <table>
+      <thead><tr><th>Item</th><th>Why it matters</th><th>Owner</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>OG image missing</strong><br/><span class="file">public/assets/branding/og-image.png</span></td>
+          <td>Referenced in <code>app/layout.tsx</code> metadata but file doesn't exist. Social previews (Slack, LinkedIn, Twitter) will show broken image.</td>
+          <td>Design — create 1200×630 PNG</td>
+        </tr>
+        <tr>
+          <td><strong>Whop transaction cap</strong></td>
+          <td>$2,500 default ceiling on new accounts blocks the $3,000 product. Need account verification + support request to raise.</td>
+          <td>Founder — Whop dashboard</td>
+        </tr>
+        <tr>
+          <td><strong>Hardcoded internal email</strong></td>
+          <td><code>abdullah.r52@gmail.com</code> is the team-notification recipient. Move to <code>INTERNAL_NOTIFICATION_EMAIL</code> env var.</td>
+          <td>Engineering — 10-minute change</td>
+        </tr>
+        <tr>
+          <td><strong>First cohort kickoff date</strong></td>
+          <td>"Date TBA" appears in 3 places (banner, hero, Flagship section). Replace with real date when announced.</td>
+          <td>Founder → engineering</td>
+        </tr>
+        <tr>
+          <td><strong>Two Enroll destinations</strong></td>
+          <td>Nav/footer Enroll buttons go to Whop URL (not yet live). Pricing-card Enroll button goes to /register → Stripe. Pick one for launch.</td>
+          <td>Founder decision</td>
+        </tr>
+        <tr>
+          <td><strong>Rate limiting</strong></td>
+          <td>No throttling on <code>/api/waitlist</code> — exposed to spam/abuse. Add Vercel rate limit or Cloudflare rule.</td>
+          <td>Engineering</td>
+        </tr>
+        <tr>
+          <td><strong>Function naming drift</strong></td>
+          <td>API route is <code>/api/waitlist</code> and function is <code>sendWaitlistConfirmation</code>, but the form is now labeled "Contact us" — there's no waitlist anymore. Rename for clarity.</td>
+          <td>Engineering — refactor</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 23. RISKS -->
+  <section class="slide">
+    <span class="eyebrow">17 · Risks</span>
+    <h2 class="section-title">What I'd <em>worry about</em>.</h2>
+
+    <div class="callout danger">
+      <strong>SECURITY · Secrets in repo.</strong> Verify <code>.env.local</code> never made it into git history. If it did: rotate every key on HubSpot, Stripe, and Resend dashboards before doing anything else.
+    </div>
+
+    <div class="callout">
+      <strong>RELIABILITY · Email failures are silent.</strong> Both flows use <code>Promise.allSettled</code> on the email calls — the user sees success even if Resend is down. If a customer pays $3,000 and never gets a receipt, that's a support ticket waiting to happen. Consider piping email failures to Sentry or similar.
+    </div>
+
+    <div class="callout">
+      <strong>RELIABILITY · No idempotency on Stripe webhook.</strong> If Stripe retries a webhook (which it will on any non-200 response, network blip, or timeout), the contact gets a duplicate note and the customer may get a duplicate receipt email. The HubSpot upsert handles the contact correctly, but notes and emails are not idempotent.
+    </div>
+
+    <div class="callout">
+      <strong>UX · Single-page architecture.</strong> Everything lives in one <code>app/page.tsx</code> file. ~1000 lines. Easy to break with a stray edit, hard to code-review in chunks. Worth extracting sections into <code>components/sections/</code> if you plan substantial changes.
+    </div>
+
+    <div class="callout">
+      <strong>STRATEGIC · Two payment paths.</strong> Stripe and Whop both wired (one half-wired). Decide before launch which is canonical — running both creates reconciliation headaches in HubSpot (Stripe webhook upgrades to customer, Whop won't unless you add API integration).
+    </div>
+  </section>
+
+  <!-- 24. DIVIDER — FIRST WEEK -->
+  <section class="slide divider">
+    <div class="chapter-num">CHAPTER SIX</div>
+    <h1>Your <em>first week</em>.</h1>
+  </section>
+
+  <!-- 25. FIRST WEEK -->
+  <section class="slide">
+    <span class="eyebrow">18 · Onboarding</span>
+    <h2 class="section-title">Day-by-day <em>kickoff</em>.</h2>
+    <p class="lede">If you've never seen this codebase before, this is the order I'd work through it.</p>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <h3>Day 1 — Get it running</h3>
+        <ul class="bullets">
+          <li>Clone repo, <code>npm install</code></li>
+          <li>Get <code>.env.local</code> from a teammate (don't commit it)</li>
+          <li><code>npm run dev</code>, load localhost:3000, click everything</li>
+          <li>Submit the contact form with your own email — verify HubSpot contact appears + you get the confirmation email</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Day 2 — Read the code</h3>
+        <ul class="bullets">
+          <li>Read <code>CLAUDE.md</code> end-to-end</li>
+          <li>Skim <code>app/page.tsx</code> top to bottom — get a feel for the sections</li>
+          <li>Read each <code>lib/*.ts</code> file</li>
+          <li>Trace one form submission from button click → HubSpot record</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Day 3 — Audit dashboards</h3>
+        <ul class="bullets">
+          <li>Log into HubSpot, Stripe, Resend, Whop — get accounts/permissions</li>
+          <li>Verify Stripe webhook is registered + delivering</li>
+          <li>Verify Resend domain status</li>
+          <li>Check HubSpot for the last 10 contacts — does the data look right?</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Day 4 — Address the punch list</h3>
+        <ul class="bullets">
+          <li>Create the OG image</li>
+          <li>Move the hardcoded email to an env var</li>
+          <li>Verify <code>.env.local</code> isn't in git history</li>
+          <li>Pick a stance: Stripe or Whop, and align all Enroll buttons</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Day 5 — Document &amp; commit</h3>
+        <ul class="bullets">
+          <li>Update <code>CLAUDE.md</code> with anything you changed or learned</li>
+          <li>Create your first PR — even a small one — to confirm CI/deploy flow works</li>
+          <li>Set up Sentry or your error-monitoring tool of choice</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Ongoing — Keep this true</h3>
+        <ul class="bullets">
+          <li><code>CLAUDE.md</code> is the living source of truth — update it when you change anything material</li>
+          <li>Test the contact form + Stripe checkout (test mode) before every deploy</li>
+          <li>Watch HubSpot lifecycle transitions in the first week of cohort to confirm flows still work end-to-end</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 26. KEY CONTACTS / REFERENCES -->
+  <section class="slide">
+    <span class="eyebrow">19 · References</span>
+    <h2 class="section-title"><em>Where</em> to look.</h2>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <h3>In this repo</h3>
+        <dl class="kv" style="grid-template-columns: 200px 1fr;">
+          <dt><code>CLAUDE.md</code></dt><dd>Project context, integration status, known issues</dd>
+          <dt><code>AGENTS.md</code></dt><dd>Next.js 16 breaking-changes warning</dd>
+          <dt><code>app/page.tsx</code></dt><dd>The entire landing page</dd>
+          <dt><code>lib/</code></dt><dd>All integrations (HubSpot, Stripe, Resend)</dd>
+          <dt><code>app/api/</code></dt><dd>All server endpoints</dd>
+          <dt><code>docs/handoff-deck.html</code></dt><dd>This deck</dd>
+        </dl>
+      </div>
+      <div class="card">
+        <h3>External dashboards</h3>
+        <dl class="kv" style="grid-template-columns: 120px 1fr;">
+          <dt>HubSpot</dt><dd>app.hubspot.com — contacts, notes, lifecycle</dd>
+          <dt>Stripe</dt><dd>dashboard.stripe.com — payments, webhooks, Payment Link</dd>
+          <dt>Resend</dt><dd>resend.com/emails — delivery logs, domain status</dd>
+          <dt>Whop</dt><dd>whop.com/dashboard — product (pending creation)</dd>
+          <dt>Vercel</dt><dd>vercel.com — deployments, env vars, logs</dd>
+          <dt>DNS</dt><dd>(wherever techclear.org / .io DNS is hosted)</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 28px;">
+      <strong>Two domains, intentional:</strong> The website lives at <code>techclear.io</code>. Email sends from <code>techclear.org</code>. The split is because <code>.org</code> was verified for email first (DNS conflict on <code>.io</code> took longer to resolve). Both belong to the same business.
+    </div>
+  </section>
+
+  <!-- 27. CLOSING -->
+  <section class="slide title-slide">
+    <div class="eyebrow">End · Handoff Complete</div>
+    <h1>You have <em>everything</em><br/>you need.</h1>
+    <p class="sub">If something isn't covered here, it's either in <code>CLAUDE.md</code> or it's in the code. Read both before asking — they're the source of truth, this deck is a map.</p>
+    <p class="sub" style="margin-top: 24px; font-size: 16px;">Good luck. Ship well.</p>
+    <div class="meta">— End of deck —</div>
+  </section>
+
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-info">
+    <span class="brand">TechClear</span>
+    <span>·</span>
+    <span>Engineering Handoff | Made by Ahmad Noori</span>  
+  </div>
+  <div class="nav-controls">
+    <button class="nav-btn" id="prev">← Prev</button>
+    <span class="counter" id="counter">1 / 27</span>
+    <button class="nav-btn" id="next">Next →</button>
+    <button class="nav-btn" id="print" title="Print or save as PDF">Print</button>
+  </div>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const counter = document.getElementById('counter');
+  let i = 0;
+
+  function show(n) {
+    n = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === n));
+    counter.textContent = (n + 1) + ' / ' + slides.length;
+    i = n;
+    history.replaceState(null, '', '#' + (n + 1));
+    // Reset scroll on the active slide
+    slides[n].scrollTop = 0;
+  }
+
+  document.getElementById('next').onclick = () => show(i + 1);
+  document.getElementById('prev').onclick = () => show(i - 1);
+  document.getElementById('print').onclick = () => window.print();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); show(i + 1); }
+    if (e.key === 'ArrowLeft'  || e.key === 'PageUp')                    { e.preventDefault(); show(i - 1); }
+    if (e.key === 'Home')                                                { e.preventDefault(); show(0); }
+    if (e.key === 'End')                                                 { e.preventDefault(); show(slides.length - 1); }
+  });
+
+  // jump to hash on load (e.g. #5)
+  const initial = parseInt((location.hash || '#1').slice(1), 10);
+  if (!isNaN(initial)) show(initial - 1);
+</script>
+
+</body>
+</html>

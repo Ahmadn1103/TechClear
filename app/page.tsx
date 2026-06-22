@@ -19,6 +19,7 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [interest, setInterest] = useState("");
+  const [message, setMessage] = useState("");
   const [formState, setFormState] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -39,7 +40,7 @@ export default function Home() {
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ firstName, lastName, email, phone, interest }),
+        body: JSON.stringify({ firstName, lastName, email, phone, interest, message }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -62,8 +63,23 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-black text-white font-sans">
+      {/* Launch Announcement Banner */}
+      <a
+        href="#bootcamp"
+        onClick={scrollTo('bootcamp')}
+        className="relative z-[60] block w-full bg-white text-black border-b border-black/10 hover:bg-zinc-200 transition-colors"
+      >
+        <div className="max-w-[1400px] mx-auto px-6 md:px-16 py-3 flex items-center justify-center gap-3 md:gap-4 text-center">
+          <span className="hidden sm:inline-block text-[10px] font-bold tracking-[0.25em] uppercase border border-black px-2.5 py-1">New</span>
+          <p className="text-[11px] md:text-sm font-bold tracking-[0.15em] uppercase">
+            Program launches July 6, 2026 <span className="opacity-50 mx-2">·</span> In-person portion in Tysons, VA <span className="opacity-50 mx-2 hidden md:inline">·</span> <span className="hidden md:inline underline underline-offset-4">Learn more</span>
+          </p>
+          <ArrowRight className="w-4 h-4 hidden md:inline" />
+        </div>
+      </a>
+
       {/* Navigation */}
-      <header className="fixed top-0 w-full z-50 flex flex-col items-center pointer-events-none">
+      <header className="fixed top-[44px] md:top-[52px] w-full z-50 flex flex-col items-center pointer-events-none">
         <nav
           className={`pointer-events-auto transition-all duration-1000 ease-in-out flex justify-between items-center mt-4 w-[calc(100%-2rem)] max-w-[1400px] px-5 md:px-8 py-2 md:py-3 rounded-2xl border ${isScrolled || mobileMenuOpen
             ? "bg-[#050505]/90 backdrop-blur-xl border-white/10 shadow-2xl"
@@ -88,11 +104,12 @@ export default function Home() {
 
           <div className="flex items-center gap-3">
             <a
-              href="#waitlist"
-              onClick={scrollTo('waitlist')}
+              href="https://whop.com/techclear/pm-ai-flagship-program"
+              target="_blank"
+              rel="noopener noreferrer"
               className={`hidden md:block text-[11px] font-semibold tracking-[0.15em] uppercase border border-zinc-700 px-6 py-3 hover:bg-white hover:text-black hover:border-white transition-all duration-300 rounded-none`}
             >
-              Join Waitlist
+              Enroll
             </a>
             {/* Hamburger */}
             <button
@@ -134,11 +151,13 @@ export default function Home() {
                 </a>
               ))}
               <a
-                href="#waitlist"
-                onClick={(e) => { scrollTo('waitlist')(e); setMobileMenuOpen(false) }}
+                href="https://whop.com/techclear/pm-ai-flagship-program"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
                 className="mt-4 text-center text-[11px] font-bold tracking-[0.15em] uppercase border border-white/30 px-6 py-4 text-white hover:bg-white hover:text-black transition-all duration-300"
               >
-                Join Waitlist
+                Enroll
               </a>
             </div>
           </motion.div>
@@ -248,6 +267,24 @@ export default function Home() {
               Contact
               <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
             </a>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={mounted ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 1.2, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-10 md:mt-14 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 border-l-2 border-white pl-5 md:pl-6 py-2"
+          >
+            <div>
+              <p className="text-[10px] md:text-xs font-bold tracking-[0.25em] uppercase text-zinc-400 mb-1.5">Program Launches</p>
+              <p className="font-playfair text-2xl md:text-4xl text-white leading-tight">July 6, 2026</p>
+            </div>
+            <div className="hidden sm:block w-px h-12 bg-white/20" />
+            <div>
+              <p className="text-[10px] md:text-xs font-bold tracking-[0.25em] uppercase text-zinc-400 mb-1.5">First Cohort Kickoff</p>
+              <p className="font-playfair text-2xl md:text-4xl text-white leading-tight italic">In-person · Tysons, VA</p>
+              <p className="text-sm md:text-base text-zinc-200 font-semibold tracking-wide mt-2">Date to be announced</p>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -493,9 +530,21 @@ export default function Home() {
             <h2 className="font-playfair text-4xl md:text-7xl mb-8 leading-tight">
               PM + AI <br /><span className="italic">Flagship Program</span>
             </h2>
-            <p className="text-xl text-zinc-200 font-light mb-12 leading-relaxed">
+            <p className="text-xl text-zinc-200 font-light mb-10 leading-relaxed">
               An intensive 8-week program combining SAFe Scrum Master 6.0 certification with hands-on AI integration — built for IT professionals ready to step into leadership.
             </p>
+
+            {/* Program Details */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+              <div className="border border-white/15 px-5 py-4">
+                <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 mb-2">Program Launches</p>
+                <p className="text-white text-lg font-light">July 6, 2026</p>
+              </div>
+              <div className="border border-white/15 px-5 py-4">
+                <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 mb-2">First Cohort Kickoff</p>
+                <p className="text-white text-lg font-light">In-person · Tysons, VA</p>
+              </div>
+            </div>
 
             {/* Immersive Bootcamp Image */}
             <motion.div
@@ -628,7 +677,8 @@ export default function Home() {
                 <h3 className="font-playfair text-4xl md:text-6xl text-white leading-tight mb-4">
                   8 weeks.<br /><span className="italic">One decision.</span>
                 </h3>
-                <p className="text-zinc-400 text-lg font-light">Enroll to view pricing and secure your spot.</p>
+                <p className="text-zinc-400 text-lg font-light mb-3">Enroll to view pricing and secure your spot.</p>
+                <p className="text-zinc-500 text-sm font-light">Program launches July 6, 2026 · In-person portion in Tysons, VA</p>
               </div>
               <ul className="space-y-4 md:max-w-xs">
                 {["Full 8-week program access", "SAFe SSM 6.0 certification included", "1-on-1 coaching sessions", "Priority support"].map((point) => (
@@ -662,7 +712,7 @@ export default function Home() {
         </div>
       </section>}
 
-      {/* QR Code — Early Access */}
+      {/* QR Code — Early Access — hidden for now, restore by uncommenting:
       <section className="px-6 md:px-16 py-20 md:py-32 bg-[#020202] border-b border-white/10 text-white">
         <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-16 md:gap-24">
           <div className="flex-1">
@@ -692,6 +742,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      */}
 
       {/* Waitlist / CTA Section */}
       <section id="waitlist" className="px-6 md:px-16 py-20 md:py-40 bg-black text-white relative overflow-hidden">
@@ -722,22 +773,18 @@ export default function Home() {
         </div>
 
         <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 relative z-10">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={mounted ? { opacity: 1 } : {}}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.8 }}
-          >
+          <div>
             <span className="inline-block border border-white/30 text-sm md:text-base font-bold tracking-[0.2em] uppercase px-5 py-2 mb-8 text-zinc-200">
               Contact
             </span>
             <h2 className="font-playfair text-4xl md:text-7xl mb-6 md:mb-8">
-              Request <span className="italic">early access</span>.
+              If you need support, <span className="italic">contact us</span>.
             </h2>
             <p className="text-lg md:text-2xl text-zinc-400 font-light mb-10 md:mb-12 max-w-lg leading-relaxed">
-              We exist for the driven professionals who believe a better career path is possible. Join the waitlist for our upcoming Flagship Program.
+              Questions about the PM + AI Flagship Program, enrollment, or anything else? Send us a message and our team will get back to you shortly.
             </p>
 
+            {/* QR CODE — hidden for now, restore by uncommenting:
             <div className="flex items-center gap-6">
               <div className="p-4 bg-white shrink-0" style={{ lineHeight: 0 }}>
                 <QRCodeSVG
@@ -752,14 +799,10 @@ export default function Home() {
                 Scan to join<br />the waitlist
               </p>
             </div>
-          </motion.div>
+            */}
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={mounted ? { opacity: 1 } : {}}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
+          <div>
             {formState === "success" ? (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -773,14 +816,14 @@ export default function Home() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 mb-3">You&apos;re on the list</p>
+                  <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 mb-3">Message received</p>
                   <h3 className="font-playfair text-3xl md:text-4xl text-white mb-4 italic">Thank you, {firstName}.</h3>
                   <p className="text-zinc-400 font-light text-lg leading-relaxed">
-                    We&apos;ve received your request for early access. We&apos;ll be in touch shortly with next steps.
+                    We&apos;ve received your message. Our team will be in touch shortly.
                   </p>
                 </div>
                 <button
-                  onClick={() => { setFormState("idle"); setFirstName(""); setLastName(""); setEmail(""); setPhone(""); setInterest(""); }}
+                  onClick={() => { setFormState("idle"); setFirstName(""); setLastName(""); setEmail(""); setPhone(""); setInterest(""); setMessage(""); }}
                   className="text-[11px] font-bold tracking-[0.15em] uppercase border border-white/20 px-6 py-3 text-zinc-400 hover:border-white hover:text-white transition-all duration-300 w-fit"
                 >
                   Submit another response
@@ -796,7 +839,7 @@ export default function Home() {
                       id="wl-firstname"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent transition-all font-light text-lg rounded-none text-white cursor-none"
+                      className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent font-light text-lg rounded-none text-white cursor-none"
                       required
                       disabled={formState === "loading"}
                     />
@@ -808,7 +851,7 @@ export default function Home() {
                       id="wl-lastname"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
-                      className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent transition-all font-light text-lg rounded-none text-white cursor-none"
+                      className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent font-light text-lg rounded-none text-white cursor-none"
                       disabled={formState === "loading"}
                     />
                   </div>
@@ -820,7 +863,7 @@ export default function Home() {
                     id="wl-email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent transition-all font-light text-lg rounded-none text-white cursor-none"
+                    className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent font-light text-lg rounded-none text-white cursor-none"
                     required
                     disabled={formState === "loading"}
                   />
@@ -832,7 +875,7 @@ export default function Home() {
                     id="wl-phone"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent transition-all font-light text-lg rounded-none text-white cursor-none"
+                    className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent font-light text-lg rounded-none text-white cursor-none"
                     disabled={formState === "loading"}
                   />
                 </div>
@@ -842,18 +885,37 @@ export default function Home() {
                     id="wl-interest"
                     value={interest}
                     onChange={(e) => setInterest(e.target.value)}
-                    className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-black text-white transition-all appearance-none font-light text-lg rounded-none cursor-none"
+                    className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-black text-white appearance-none font-light text-lg rounded-none cursor-none"
                     required
                     disabled={formState === "loading"}
                   >
                     <option value="" disabled className="text-zinc-500">Select Area of Interest</option>
                     <option value="bootcamp">PM + AI Flagship Program</option>
+                    <option value="enrollment">Enrollment Question</option>
+                    <option value="pricing">Pricing & Payment</option>
+                    <option value="cohort">Cohort Schedule / In-person Kickoff</option>
+                    <option value="curriculum">Curriculum & Certification</option>
+                    <option value="partnership">Partnership / Corporate Inquiry</option>
+                    <option value="support">Technical Support</option>
+                    <option value="other">Other</option>
                   </select>
                   <div className="absolute right-6 top-[55%] pointer-events-none text-zinc-400">
                     <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </div>
+                </div>
+                <div>
+                  <label className="inline-block border border-white/30 text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1.5 mb-3 text-zinc-300" htmlFor="wl-message">How can we help? <span className="text-zinc-400 text-[10px] tracking-[0.2em] font-bold ml-1">(OPTIONAL)</span></label>
+                  <textarea
+                    id="wl-message"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    rows={5}
+                    placeholder="Tell us what you're looking for — a question about the program, pricing, the in-person kickoff, a partnership, or anything else..."
+                    className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent font-light text-lg rounded-none text-white cursor-none resize-y placeholder:text-zinc-300 placeholder:font-light"
+                    disabled={formState === "loading"}
+                  />
                 </div>
                 {formState === "error" && (
                   <p className="text-sm text-red-400 font-light border border-red-400/30 px-5 py-4 bg-red-400/5">
@@ -865,14 +927,14 @@ export default function Home() {
                   disabled={formState === "loading"}
                   className="w-full bg-white text-black px-8 py-6 font-bold text-[13px] tracking-[0.15em] uppercase hover:bg-zinc-200 transition-colors mt-4 flex justify-between items-center group rounded-none cursor-none disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  <span>{formState === "loading" ? "Submitting..." : "Join Waitlist"}</span>
+                  <span>{formState === "loading" ? "Submitting..." : "Send Message"}</span>
                   {formState !== "loading" && (
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   )}
                 </button>
               </form>
             )}
-          </motion.div>
+          </div>
         </div>
       </section>
 
