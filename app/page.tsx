@@ -65,8 +65,9 @@ export default function Home() {
     <main className="min-h-screen bg-black text-white font-sans">
       {/* Launch Announcement Banner */}
       <a
-        href="#bootcamp"
-        onClick={scrollTo('bootcamp')}
+        href="https://whop.com/tech-clear/pm-ai-cohort/"
+        target="_blank"
+        rel="noopener noreferrer"
         className="relative z-[60] block w-full bg-white text-black border-b border-black/10 hover:bg-zinc-200 transition-colors"
       >
         <div className="max-w-[1400px] mx-auto px-6 md:px-16 py-3 flex items-center justify-center gap-3 md:gap-4 text-center">
@@ -104,7 +105,7 @@ export default function Home() {
 
           <div className="flex items-center gap-3">
             <a
-              href="https://whop.com/techclear/pm-ai-flagship-program"
+              href="https://whop.com/checkout/plan_3W9x5BQ9ZJ5a9"
               target="_blank"
               rel="noopener noreferrer"
               className={`hidden md:block text-[11px] font-semibold tracking-[0.15em] uppercase border border-zinc-700 px-6 py-3 hover:bg-white hover:text-black hover:border-white transition-all duration-300 rounded-none`}
@@ -151,7 +152,7 @@ export default function Home() {
                 </a>
               ))}
               <a
-                href="https://whop.com/techclear/pm-ai-flagship-program"
+                href="https://whop.com/checkout/plan_3W9x5BQ9ZJ5a9"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
@@ -252,8 +253,9 @@ export default function Home() {
               <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
             </a>
             <a
-              href="#enroll"
-              onClick={scrollTo('enroll')}
+              href="https://whop.com/checkout/plan_3W9x5BQ9ZJ5a9"
+              target="_blank"
+              rel="noopener noreferrer"
               className="group flex items-center justify-between sm:justify-start gap-3 border border-white px-7 py-4 md:px-10 md:py-5 font-bold text-[12px] md:text-[13px] tracking-[0.15em] uppercase text-white hover:bg-white hover:text-black transition-all duration-300 rounded-none"
             >
               Enroll
