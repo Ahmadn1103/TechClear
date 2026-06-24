@@ -570,7 +570,7 @@ export default function Home() {
             {[
               { title: "8-Week Curriculum", desc: "A rigorous, phased approach covering both agile methodologies and AI." },
               { title: "SAFe SSM 6.0", desc: "Gain the globally recognized SAFe Scrum Master certification." },
-              { title: "Flexible Delivery", desc: "Available virtually, in-person, or via 1-on-1 coaching." },
+              { title: "Flexible Delivery", desc: "Cohort 1 is delivered in-person, virtually, and through 1-on-1 coaching — built to meet you where you are." },
               { title: "Career Growth", desc: "Position yourself at the forefront of the AI-driven tech economy." }
             ].map((item, i) => (
               <motion.div
