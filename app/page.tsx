@@ -72,9 +72,9 @@ export default function Home() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-16 py-3 flex items-center justify-center gap-3 md:gap-4 text-center">
           <span className="hidden sm:inline-block text-[10px] font-bold tracking-[0.25em] uppercase border border-black px-2.5 py-1">New</span>
           <p className="text-[11px] md:text-sm font-bold tracking-[0.15em] uppercase">
-            Program launches July 6, 2026 <span className="opacity-50 mx-2">·</span> In-person portion in Tysons, VA <span className="opacity-50 mx-2 hidden md:inline">·</span> <span className="hidden md:inline underline underline-offset-4">Learn more</span>
+            Program launches July 6, 2026 <span className="opacity-50 mx-2">·</span> In-person portion in Tysons, VA <span className="opacity-50 mx-2">·</span> <span className="underline underline-offset-4">Learn more</span>
           </p>
-          <ArrowRight className="w-4 h-4 hidden md:inline" />
+          <ArrowRight className="w-4 h-4" />
         </div>
       </a>
 
