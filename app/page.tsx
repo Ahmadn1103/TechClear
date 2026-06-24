@@ -252,8 +252,9 @@ export default function Home() {
               <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
             </a>
             <a
-              href="#enroll"
-              onClick={scrollTo('enroll')}
+              href="https://whop.com/techclear/pm-ai-flagship-program"
+              target="_blank"
+              rel="noopener noreferrer"
               className="group flex items-center justify-between sm:justify-start gap-3 border border-white px-7 py-4 md:px-10 md:py-5 font-bold text-[12px] md:text-[13px] tracking-[0.15em] uppercase text-white hover:bg-white hover:text-black transition-all duration-300 rounded-none"
             >
               Enroll
