@@ -105,7 +105,7 @@ export default function Home() {
 
           <div className="flex items-center gap-3">
             <a
-              href="https://whop.com/checkout/plan_3W9x5BQ9ZJ5a9"
+              href="https://whop.com/tech-clear/pm-ai-cohort/"
               target="_blank"
               rel="noopener noreferrer"
               className={`hidden md:block text-[11px] font-semibold tracking-[0.15em] uppercase border border-zinc-700 px-6 py-3 hover:bg-white hover:text-black hover:border-white transition-all duration-300 rounded-none`}
@@ -152,7 +152,7 @@ export default function Home() {
                 </a>
               ))}
               <a
-                href="https://whop.com/checkout/plan_3W9x5BQ9ZJ5a9"
+                href="https://whop.com/tech-clear/pm-ai-cohort/"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
@@ -253,7 +253,7 @@ export default function Home() {
               <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
             </a>
             <a
-              href="https://whop.com/checkout/plan_3W9x5BQ9ZJ5a9"
+              href="https://whop.com/tech-clear/pm-ai-cohort/"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center justify-between sm:justify-start gap-3 border border-white px-7 py-4 md:px-10 md:py-5 font-bold text-[12px] md:text-[13px] tracking-[0.15em] uppercase text-white hover:bg-white hover:text-black transition-all duration-300 rounded-none"
