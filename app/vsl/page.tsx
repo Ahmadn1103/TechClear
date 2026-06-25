@@ -132,7 +132,52 @@ export default function VSLPage() {
         .vsl-footer p { font-size:13px; color:var(--text-soft); margin-top:8px; }
         .vsl-ig { color:var(--accent) !important; }
 
-        @media(max-width:600px){ .vsl-hero { padding:60px 0 36px; } .vsl-actions { flex-direction:column; } .vsl-btn { justify-content:center; } }
+        /* ===== MOBILE ===== */
+        @media(max-width:600px){
+          .vsl-wrap { padding:0 18px; }
+          .vsl-nav { padding:16px 18px; }
+          .vsl-nav-spacer { height:61px; }
+          .vsl-nav-cta { font-size:13px; padding:8px 14px; }
+
+          .vsl-hero { padding:40px 0 32px; }
+          .vsl-eyebrow { font-size:11px; padding:6px 12px; margin-bottom:20px; }
+          .vsl-h1 { font-size:clamp(34px,10vw,52px); }
+          .vsl-lede { font-size:15px; margin-top:18px; }
+          .vsl-actions { flex-direction:column; margin-top:28px; gap:10px; }
+          .vsl-btn { justify-content:center; width:100%; font-size:14.5px; padding:14px 20px; }
+
+          .vsl-section { padding:16px 0 48px; }
+          .vsl-frame { max-width:100%; border-radius:14px; }
+
+          .vsl-founder { margin-top:32px; }
+          .vsl-founder p { font-size:14.5px; }
+
+          .vsl-sec { padding:48px 0; }
+          .vsl-h2 { font-size:clamp(24px,7vw,36px); }
+          .vsl-intro { font-size:15px; }
+
+          .vsl-prob-grid { grid-template-columns:1fr; gap:14px; margin-top:28px; }
+          .vsl-prob { padding:22px 20px; }
+
+          .vsl-do-grid { grid-template-columns:1fr; margin-top:28px; border-radius:14px; }
+          .vsl-do { padding:24px 20px; }
+
+          .vsl-flag { gap:28px; margin-top:24px; }
+          .vsl-flag-feats { gap:14px; margin-top:16px; }
+          .vsl-flag-visual { aspect-ratio:16/7; border-radius:14px; }
+
+          .vsl-price-card { padding:32px 20px; border-radius:18px; }
+          .vsl-price-amount { font-size:clamp(48px,14vw,72px); }
+          .vsl-price-list { max-width:100%; }
+          .vsl-price-list li { font-size:14px; padding:10px 0; }
+
+          .vsl-schedule { gap:12px; }
+          .vsl-sched { min-width:calc(50% - 6px); padding:20px 16px; }
+          .vsl-sched .v { font-size:18px; }
+
+          .vsl-footer { padding:36px 0; }
+          .vsl-fnav { gap:16px; font-size:13px; }
+        }
       `}</style>
 
       <link rel="preconnect" href="https://fonts.googleapis.com" />
