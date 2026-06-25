@@ -420,7 +420,7 @@ export default function VSLPage() {
             <div className="vsl-label">Logistics</div>
             <h2 className="vsl-h2">The cohort at a glance.</h2>
             <div className="vsl-schedule">
-              <div className="vsl-sched"><div className="k">Start date</div><div className="v">Sun, Jul 6</div></div>
+              <div className="vsl-sched"><div className="k">Start date</div><div className="v">Mon, Jul 6</div></div>
               <div className="vsl-sched"><div className="k">Format</div><div className="v">8 weeks<small>Live + async</small></div></div>
               <div className="vsl-sched"><div className="k">Delivery</div><div className="v">Hybrid<small>In-person · virtual · 1-on-1</small></div></div>
               <div className="vsl-sched"><div className="k">Seats</div><div className="v">30 max<small>Small-group by design</small></div></div>
