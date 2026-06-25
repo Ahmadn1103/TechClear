@@ -217,7 +217,7 @@ export default function VSLPage() {
         <header className="vsl-wrap vsl-hero">
           <div className="vsl-eyebrow">
             <span className="vsl-dot" />
-            IT Workforce Training · Cohort starts Monday, June 22
+            IT Workforce Training · Cohort starts Monday, July 6
           </div>
           <h1 className="vsl-h1">
             Build with intention.{" "}
@@ -258,6 +258,13 @@ export default function VSLPage() {
             )}
           </div>
 
+          {/* Enroll CTA below video */}
+          <div style={{ textAlign: "center", marginTop: 32 }}>
+            <a href={ENROLL_URL} target="_blank" rel="noopener noreferrer" className="vsl-btn vsl-btn-primary">
+              Enroll Now →
+            </a>
+          </div>
+
           {/* Founder */}
           <div className="vsl-founder">
             <div className="vsl-av">AR</div>
@@ -265,7 +272,7 @@ export default function VSLPage() {
             <h3>Abdullah Rafiq</h3>
             <div className="vsl-role">Founder, TechClear</div>
             <p>
-              Over the past two years, Abdullah has personally trained 200+ students and helped them break into the
+              Over the past three years, Abdullah has personally trained 250+ students and helped them break into the
               tech industry. He built TechClear to take that same proven path — the certifications, the AI skills, and
               the hands-on mentorship — and put it within reach of the masses.
             </p>
@@ -413,7 +420,7 @@ export default function VSLPage() {
             <div className="vsl-label">Logistics</div>
             <h2 className="vsl-h2">The cohort at a glance.</h2>
             <div className="vsl-schedule">
-              <div className="vsl-sched"><div className="k">Start date</div><div className="v">Mon, Jun 22</div></div>
+              <div className="vsl-sched"><div className="k">Start date</div><div className="v">Sun, Jul 6</div></div>
               <div className="vsl-sched"><div className="k">Format</div><div className="v">8 weeks<small>Live + async</small></div></div>
               <div className="vsl-sched"><div className="k">Delivery</div><div className="v">Hybrid<small>In-person · virtual · 1-on-1</small></div></div>
               <div className="vsl-sched"><div className="k">Seats</div><div className="v">30 max<small>Small-group by design</small></div></div>
