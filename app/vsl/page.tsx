@@ -1,12 +1,6 @@
-"use client";
-
-import { useState } from "react";
-
 const ENROLL_URL = "https://whop.com/tech-clear/pm-ai-cohort/";
 
 export default function VSLPage() {
-  const [vslLoaded, setVslLoaded] = useState(false);
-
   return (
     <>
       <style>{`
@@ -38,8 +32,7 @@ export default function VSLPage() {
         /* ---------- hero ---------- */
         .vsl-hero { padding:96px 0 56px; text-align:center; }
         .vsl-eyebrow { display:inline-flex; align-items:center; gap:9px; font-size:12.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); background:var(--accent-soft); border:1px solid rgba(61,155,255,.25); padding:7px 16px; border-radius:40px; margin-bottom:30px; }
-        .vsl-dot { width:6px; height:6px; border-radius:50%; background:var(--accent-2); box-shadow:0 0 10px var(--accent-2); animation:vslPulse 2s infinite; display:inline-block; flex-shrink:0; }
-        @keyframes vslPulse { 0%,100%{opacity:1}50%{opacity:.35} }
+        .vsl-dot { width:6px; height:6px; border-radius:50%; background:var(--accent-2); box-shadow:0 0 10px var(--accent-2); display:inline-block; flex-shrink:0; }
         .vsl-h1 { font-weight:700; font-size:clamp(42px,7vw,82px); line-height:1.04; letter-spacing:-.03em; max-width:15ch; margin:0 auto; }
         .vsl-grad { background:linear-gradient(120deg,var(--accent),var(--accent-2)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
         .vsl-lede { font-size:clamp(16px,2.1vw,20px); color:var(--text-soft); max-width:64ch; margin:28px auto 0; text-align:center; }
@@ -54,9 +47,6 @@ export default function VSLPage() {
         .vsl-section { padding:24px 0 80px; }
         .vsl-frame { position:relative; border-radius:22px; overflow:hidden; border:1px solid var(--line); background:#000; box-shadow:0 40px 100px -40px rgba(0,0,0,.8),0 0 0 1px rgba(61,155,255,.1); aspect-ratio:1080/1920; max-width:340px; max-height:72vh; margin:0 auto; }
         .vsl-frame iframe,.vsl-frame video { position:absolute; inset:0; width:100%; height:100%; border:0; }
-        .vsl-poster { position:absolute; inset:0; cursor:pointer; display:flex; align-items:center; justify-content:center; background-color:#000; background-image:linear-gradient(rgba(4,8,15,.32),rgba(4,8,15,.55)),url('https://i.ytimg.com/vi/4zQtYfry7mo/hqdefault.jpg'); background-size:cover; background-position:center; }
-        .vsl-play { width:80px; height:80px; border-radius:50%; background:linear-gradient(120deg,var(--accent),var(--accent-2)); display:flex; align-items:center; justify-content:center; animation:vslRing 2.4s infinite; }
-        @keyframes vslRing { 0%{box-shadow:0 0 0 0 rgba(61,155,255,.45)}70%{box-shadow:0 0 0 28px rgba(61,155,255,0)}100%{box-shadow:0 0 0 0 rgba(61,155,255,0)} }
 
         /* ---------- founder ---------- */
         .vsl-founder { max-width:620px; margin:42px auto 0; text-align:center; }
@@ -194,16 +184,9 @@ export default function VSLPage() {
       <link rel="dns-prefetch" href="https://s.ytimg.com" />
       <link rel="dns-prefetch" href="https://i.ytimg.com" />
       <link rel="dns-prefetch" href="https://googlevideo.com" />
-      {/* Preload the cover so it paints immediately instead of waiting on CSS parse */}
-      <link
-        rel="preload"
-        as="image"
-        href="https://i.ytimg.com/vi/4zQtYfry7mo/hqdefault.jpg"
-        fetchPriority="high"
-      />
       {/* eslint-disable-next-line @next/next/no-page-custom-font */}
       <link
-        href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap"
         rel="stylesheet"
       />
 
@@ -259,23 +242,12 @@ export default function VSLPage() {
         {/* VSL */}
         <div className="vsl-wrap vsl-section" id="vsl-video">
           <div className="vsl-frame">
-            {vslLoaded ? (
-              <iframe
-                src="https://www.youtube.com/embed/4zQtYfry7mo?autoplay=1&playsinline=1&rel=0&modestbranding=1"
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; accelerometer; gyroscope"
-                allowFullScreen
-                loading="eager"
-                title="TechClear PM + AI Flagship Program overview"
-              />
-            ) : (
-              <div className="vsl-poster" onClick={() => setVslLoaded(true)}>
-                <div className="vsl-play">
-                  <svg viewBox="0 0 24 24" width="30" height="30" fill="#04121f" style={{ marginLeft: 5 }}>
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
-              </div>
-            )}
+            <iframe
+              src="https://www.youtube.com/embed/4zQtYfry7mo?playsinline=1&rel=0&modestbranding=1"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; accelerometer; gyroscope"
+              allowFullScreen
+              title="TechClear PM + AI Flagship Program overview"
+            />
           </div>
 
           {/* Enroll CTA below video */}
