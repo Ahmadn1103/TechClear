@@ -32,8 +32,7 @@ export default function VSLPage() {
         /* ---------- hero ---------- */
         .vsl-hero { padding:96px 0 56px; text-align:center; }
         .vsl-eyebrow { display:inline-flex; align-items:center; gap:9px; font-size:12.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); background:var(--accent-soft); border:1px solid rgba(61,155,255,.25); padding:7px 16px; border-radius:40px; margin-bottom:30px; }
-        .vsl-dot { width:6px; height:6px; border-radius:50%; background:var(--accent-2); box-shadow:0 0 10px var(--accent-2); animation:vslPulse 2s infinite; display:inline-block; flex-shrink:0; }
-        @keyframes vslPulse { 0%,100%{opacity:1}50%{opacity:.35} }
+        .vsl-dot { width:6px; height:6px; border-radius:50%; background:var(--accent-2); box-shadow:0 0 10px var(--accent-2); display:inline-block; flex-shrink:0; }
         .vsl-h1 { font-weight:700; font-size:clamp(42px,7vw,82px); line-height:1.04; letter-spacing:-.03em; max-width:15ch; margin:0 auto; }
         .vsl-grad { background:linear-gradient(120deg,var(--accent),var(--accent-2)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
         .vsl-lede { font-size:clamp(16px,2.1vw,20px); color:var(--text-soft); max-width:64ch; margin:28px auto 0; text-align:center; }
@@ -187,7 +186,7 @@ export default function VSLPage() {
       <link rel="dns-prefetch" href="https://googlevideo.com" />
       {/* eslint-disable-next-line @next/next/no-page-custom-font */}
       <link
-        href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap"
         rel="stylesheet"
       />
 
