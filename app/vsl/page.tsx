@@ -184,13 +184,23 @@ export default function VSLPage() {
 
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      {/* Warm up YouTube connections early so the player + poster load fast on click */}
+      {/* Warm up YouTube connections early so the player + poster load fast on click.
+          s.ytimg.com serves the player base.js — it's on the critical path to playback. */}
       <link rel="preconnect" href="https://www.youtube.com" crossOrigin="anonymous" />
+      <link rel="preconnect" href="https://s.ytimg.com" crossOrigin="anonymous" />
       <link rel="preconnect" href="https://i.ytimg.com" crossOrigin="anonymous" />
       <link rel="preconnect" href="https://www.google.com" crossOrigin="anonymous" />
       <link rel="dns-prefetch" href="https://www.youtube.com" />
+      <link rel="dns-prefetch" href="https://s.ytimg.com" />
       <link rel="dns-prefetch" href="https://i.ytimg.com" />
       <link rel="dns-prefetch" href="https://googlevideo.com" />
+      {/* Preload the cover so it paints immediately instead of waiting on CSS parse */}
+      <link
+        rel="preload"
+        as="image"
+        href="https://i.ytimg.com/vi/4zQtYfry7mo/hqdefault.jpg"
+        fetchPriority="high"
+      />
       {/* eslint-disable-next-line @next/next/no-page-custom-font */}
       <link
         href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap"
