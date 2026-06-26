@@ -52,9 +52,9 @@ export default function VSLPage() {
 
         /* ---------- VSL ---------- */
         .vsl-section { padding:24px 0 80px; }
-        .vsl-frame { position:relative; border-radius:22px; overflow:hidden; border:1px solid var(--line); background:#000; box-shadow:0 40px 100px -40px rgba(0,0,0,.8),0 0 0 1px rgba(61,155,255,.1); aspect-ratio:1080/1906; max-width:392px; margin:0 auto; }
+        .vsl-frame { position:relative; border-radius:22px; overflow:hidden; border:1px solid var(--line); background:#000; box-shadow:0 40px 100px -40px rgba(0,0,0,.8),0 0 0 1px rgba(61,155,255,.1); aspect-ratio:1080/1920; max-width:340px; max-height:72vh; margin:0 auto; }
         .vsl-frame iframe,.vsl-frame video { position:absolute; inset:0; width:100%; height:100%; border:0; }
-        .vsl-poster { position:absolute; inset:0; cursor:pointer; display:flex; align-items:center; justify-content:center; background-color:#000; background-image:linear-gradient(rgba(4,8,15,.32),rgba(4,8,15,.55)),url('https://i.vimeocdn.com/video/2165559795-ad8b40fa2e7f0e59d44ce2f1521e10870e4a526e13e23d157e1a6d0d17d18a92-d_960?region=us'); background-size:cover; background-position:center; }
+        .vsl-poster { position:absolute; inset:0; cursor:pointer; display:flex; align-items:center; justify-content:center; background-color:#000; background-image:linear-gradient(rgba(4,8,15,.32),rgba(4,8,15,.55)),url('https://i.ytimg.com/vi/4zQtYfry7mo/hqdefault.jpg'); background-size:cover; background-position:center; }
         .vsl-play { width:80px; height:80px; border-radius:50%; background:linear-gradient(120deg,var(--accent),var(--accent-2)); display:flex; align-items:center; justify-content:center; animation:vslRing 2.4s infinite; }
         @keyframes vslRing { 0%{box-shadow:0 0 0 0 rgba(61,155,255,.45)}70%{box-shadow:0 0 0 28px rgba(61,155,255,0)}100%{box-shadow:0 0 0 0 rgba(61,155,255,0)} }
 
@@ -148,8 +148,8 @@ export default function VSLPage() {
 
           .vsl-section { padding:16px 0 48px; }
           /* Keep the portrait frame fully visible on phones — cap height to the
-             viewport so the cover/play button aren't cut off below the fold. */
-          .vsl-frame { max-width:100%; max-height:78vh; border-radius:14px; }
+             viewport so the whole video shows without scrolling. */
+          .vsl-frame { max-width:100%; max-height:62vh; border-radius:14px; }
 
           .vsl-founder { margin-top:32px; }
           .vsl-founder p { font-size:14.5px; }
@@ -184,13 +184,13 @@ export default function VSLPage() {
 
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      {/* Warm up Vimeo connections early so the player + poster load fast on click */}
-      <link rel="preconnect" href="https://player.vimeo.com" crossOrigin="anonymous" />
-      <link rel="preconnect" href="https://i.vimeocdn.com" crossOrigin="anonymous" />
-      <link rel="preconnect" href="https://f.vimeocdn.com" crossOrigin="anonymous" />
-      <link rel="dns-prefetch" href="https://player.vimeo.com" />
-      <link rel="dns-prefetch" href="https://i.vimeocdn.com" />
-      <link rel="dns-prefetch" href="https://f.vimeocdn.com" />
+      {/* Warm up YouTube connections early so the player + poster load fast on click */}
+      <link rel="preconnect" href="https://www.youtube.com" crossOrigin="anonymous" />
+      <link rel="preconnect" href="https://i.ytimg.com" crossOrigin="anonymous" />
+      <link rel="preconnect" href="https://www.google.com" crossOrigin="anonymous" />
+      <link rel="dns-prefetch" href="https://www.youtube.com" />
+      <link rel="dns-prefetch" href="https://i.ytimg.com" />
+      <link rel="dns-prefetch" href="https://googlevideo.com" />
       {/* eslint-disable-next-line @next/next/no-page-custom-font */}
       <link
         href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap"
@@ -251,8 +251,8 @@ export default function VSLPage() {
           <div className="vsl-frame">
             {vslLoaded ? (
               <iframe
-                src="https://player.vimeo.com/video/1198860755?h=884a843cdd&autoplay=1&playsinline=1&muted=0&badge=0&autopause=0&title=0&byline=0&portrait=0&dnt=1"
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                src="https://www.youtube.com/embed/4zQtYfry7mo?autoplay=1&playsinline=1&rel=0&modestbranding=1"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; accelerometer; gyroscope"
                 allowFullScreen
                 loading="eager"
                 title="TechClear PM + AI Flagship Program overview"
