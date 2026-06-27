@@ -383,7 +383,7 @@ export default function VSLPage() {
           <div className="vsl-wrap">
             <div className="vsl-price-card">
               <div className="vsl-price-tier">PM + AI Flagship Program — Cohort 1</div>
-              <div className="vsl-price-amount">$3,000</div>
+              <div className="vsl-price-amount">$2,000</div>
               <div className="vsl-price-note">Paid in full · one-time · cohort capped at 30 seats</div>
               <ul className="vsl-price-list">
                 <li><span className="vsl-ck">✓</span><span>8 weeks of live, cohort-based instruction</span></li>
