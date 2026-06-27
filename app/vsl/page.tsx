@@ -360,7 +360,7 @@ export default function VSLPage() {
                 <div className="vsl-flag-feats">
                   <div className="vsl-feat"><h4>8-Week Curriculum</h4><p>A rigorous, phased approach across agile methodologies and AI.</p></div>
                   <div className="vsl-feat"><h4>SAFe SSM 6.0</h4><p>The globally recognized SAFe Scrum Master certification.</p></div>
-                  <div className="vsl-feat"><h4>Flexible Delivery</h4><p>Virtual, in-person, or via 1-on-1 coaching.</p></div>
+                  <div className="vsl-feat"><h4>In-Person Delivery</h4><p>Live, in-person sessions in Arlington, VA.</p></div>
                   <div className="vsl-feat"><h4>Career Growth</h4><p>Position yourself at the forefront of the AI-driven economy.</p></div>
                 </div>
               </div>
@@ -383,7 +383,7 @@ export default function VSLPage() {
           <div className="vsl-wrap">
             <div className="vsl-price-card">
               <div className="vsl-price-tier">PM + AI Flagship Program — Cohort 1</div>
-              <div className="vsl-price-amount">$3,000</div>
+              <div className="vsl-price-amount">$2,000</div>
               <div className="vsl-price-note">Paid in full · one-time · cohort capped at 30 seats</div>
               <ul className="vsl-price-list">
                 <li><span className="vsl-ck">✓</span><span>8 weeks of live, cohort-based instruction</span></li>
@@ -414,7 +414,7 @@ export default function VSLPage() {
             <div className="vsl-schedule">
               <div className="vsl-sched"><div className="k">Start date</div><div className="v">Mon, Jul 6</div></div>
               <div className="vsl-sched"><div className="k">Format</div><div className="v">8 weeks<small>Live + async</small></div></div>
-              <div className="vsl-sched"><div className="k">Delivery</div><div className="v">Hybrid<small>In-person · virtual · 1-on-1</small></div></div>
+              <div className="vsl-sched"><div className="k">Delivery</div><div className="v">In-Person<small>Arlington, VA</small></div></div>
               <div className="vsl-sched"><div className="k">Seats</div><div className="v">30 max<small>Small-group by design</small></div></div>
             </div>
           </div>
