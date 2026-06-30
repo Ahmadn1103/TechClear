@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import { ArrowRight, ArrowLeft } from 'lucide-react'
 
-const PAYMENT_LINK = 'https://buy.stripe.com/6oU14mgs2bIogALaim7wA01'
+// Sign-up funnel: enrollment starts with a Calendly consultation call with
+// Abdullah Rafiq (he closes on the call) — no direct-to-payment links.
+const CONSULT_URL = 'https://calendly.com/abdullah-r52/tech-clear-pm-ai-intro-call'
 
 export default function RegisterPage() {
   return (
@@ -41,15 +43,17 @@ export default function RegisterPage() {
         </div>
 
         <a
-          href={PAYMENT_LINK}
+          href={CONSULT_URL}
+          target="_blank"
+          rel="noopener noreferrer"
           className="w-full inline-flex items-center justify-center gap-3 bg-white text-black px-10 py-5 font-bold text-[12px] tracking-[0.15em] uppercase hover:bg-zinc-200 transition-colors"
         >
-          Pay $3,000 — Secure Checkout
+          Book a Call to Enroll
           <ArrowRight className="w-4 h-4" />
         </a>
 
         <p className="text-white/60 text-sm text-center mt-4">
-          Powered by Stripe · SSL encrypted
+          Book a free intro call with Abdullah Rafiq to get started.
         </p>
       </div>
     </main>
