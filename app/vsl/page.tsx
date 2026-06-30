@@ -1,8 +1,18 @@
+"use client";
+
+import { useState } from "react";
+
 // Sign-up funnel: the VSL CTAs book a Calendly consultation call with Abdullah
 // Rafiq (he closes on the call) — no direct-to-payment checkout on the site.
 const CONSULT_URL = "https://calendly.com/abdullah-r52/tech-clear-pm-ai-intro-call";
 
+// VSL overview video. Rendered as a lightweight click-to-play poster so the
+// heavy YouTube player only loads on demand — the page presents instantly
+// instead of blocking on ~1MB of embed JS at first paint.
+const VIDEO_ID = "4zQtYfry7mo";
+
 export default function VSLPage() {
+  const [videoPlaying, setVideoPlaying] = useState(false);
   return (
     <>
       <style>{`
@@ -49,6 +59,11 @@ export default function VSLPage() {
         .vsl-section { padding:24px 0 80px; }
         .vsl-frame { position:relative; border-radius:22px; overflow:hidden; border:1px solid var(--line); background:#000; box-shadow:0 40px 100px -40px rgba(0,0,0,.8),0 0 0 1px rgba(61,155,255,.1); aspect-ratio:1080/1920; max-width:340px; max-height:72vh; margin:0 auto; }
         .vsl-frame iframe,.vsl-frame video { position:absolute; inset:0; width:100%; height:100%; border:0; }
+        .vsl-poster { position:absolute; inset:0; width:100%; height:100%; padding:0; border:0; cursor:pointer; background:#000; display:block; }
+        .vsl-poster img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+        .vsl-poster-play { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:74px; height:74px; border-radius:50%; background:linear-gradient(120deg,var(--accent),var(--accent-2)); box-shadow:0 10px 34px -8px rgba(61,155,255,.7); display:flex; align-items:center; justify-content:center; transition:transform .15s; }
+        .vsl-poster:hover .vsl-poster-play { transform:translate(-50%,-50%) scale(1.08); }
+        .vsl-poster-play::after { content:""; margin-left:6px; border-style:solid; border-width:13px 0 13px 22px; border-color:transparent transparent transparent #04121f; }
 
         /* ---------- founder ---------- */
         .vsl-founder { max-width:620px; margin:42px auto 0; text-align:center; }
@@ -244,12 +259,29 @@ export default function VSLPage() {
         {/* VSL */}
         <div className="vsl-wrap vsl-section" id="vsl-video">
           <div className="vsl-frame">
-            <iframe
-              src="https://www.youtube.com/embed/4zQtYfry7mo?playsinline=1&rel=0&modestbranding=1"
-              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; accelerometer; gyroscope"
-              allowFullScreen
-              title="TechClear PM + AI Flagship Program overview"
-            />
+            {videoPlaying ? (
+              <iframe
+                src={`https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&playsinline=1&rel=0&modestbranding=1`}
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; accelerometer; gyroscope"
+                allowFullScreen
+                title="TechClear PM + AI Flagship Program overview"
+              />
+            ) : (
+              <button
+                type="button"
+                className="vsl-poster"
+                onClick={() => setVideoPlaying(true)}
+                aria-label="Play the TechClear overview video"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`https://i.ytimg.com/vi/${VIDEO_ID}/hqdefault.jpg`}
+                  alt="TechClear PM + AI Flagship Program overview"
+                  loading="eager"
+                />
+                <span className="vsl-poster-play" aria-hidden="true" />
+              </button>
+            )}
           </div>
 
           {/* Enroll CTA below video */}
@@ -362,7 +394,7 @@ export default function VSLPage() {
                 <div className="vsl-flag-feats">
                   <div className="vsl-feat"><h4>8-Week Curriculum</h4><p>A rigorous, phased approach across agile methodologies and AI.</p></div>
                   <div className="vsl-feat"><h4>SAFe SSM 6.0</h4><p>The globally recognized SAFe Scrum Master certification.</p></div>
-                  <div className="vsl-feat"><h4>In-Person Delivery</h4><p>Live, in-person sessions in Arlington, VA.</p></div>
+                  <div className="vsl-feat"><h4>Fully Online</h4><p>Self-paced learning you can complete from anywhere, on your own schedule.</p></div>
                   <div className="vsl-feat"><h4>Career Growth</h4><p>Position yourself at the forefront of the AI-driven economy.</p></div>
                 </div>
               </div>
@@ -416,7 +448,7 @@ export default function VSLPage() {
             <div className="vsl-schedule">
               <div className="vsl-sched"><div className="k">Start date</div><div className="v">Mon, Aug 31</div></div>
               <div className="vsl-sched"><div className="k">Format</div><div className="v">8 weeks<small>Live + async</small></div></div>
-              <div className="vsl-sched"><div className="k">Delivery</div><div className="v">In-Person<small>Arlington, VA</small></div></div>
+              <div className="vsl-sched"><div className="k">Delivery</div><div className="v">Online<small>Self-paced</small></div></div>
               <div className="vsl-sched"><div className="k">Seats</div><div className="v">30 max<small>Small-group by design</small></div></div>
             </div>
           </div>
