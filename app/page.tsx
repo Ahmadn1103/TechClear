@@ -7,6 +7,9 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 
+// Sign-up funnel: CTAs route to a Calendly consultation call with Abdullah
+// Rafiq (he closes on the call) — no direct-to-payment links on the site.
+const CONSULT_URL = "https://calendly.com/abdullah-r52/tech-clear-pm-ai-intro-call";
 
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -65,7 +68,7 @@ export default function Home() {
     <main className="min-h-screen bg-black text-white font-sans">
       {/* Launch Announcement Banner */}
       <a
-        href="https://whop.com/tech-clear/pm-ai-cohort/"
+        href={CONSULT_URL}
         target="_blank"
         rel="noopener noreferrer"
         className="relative z-[60] block w-full bg-white text-black border-b border-black/10 hover:bg-zinc-200 transition-colors"
@@ -73,7 +76,7 @@ export default function Home() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-16 py-3 flex items-center justify-center gap-3 md:gap-4 text-center">
           <span className="hidden sm:inline-block text-[10px] font-bold tracking-[0.25em] uppercase border border-black px-2.5 py-1">New</span>
           <p className="text-[11px] md:text-sm font-bold tracking-[0.15em] uppercase">
-            Program launches July 6, 2026 <span className="opacity-50 mx-2">·</span> In-person portion in Arlington, VA <span className="opacity-50 mx-2 hidden md:inline">·</span> <span className="hidden md:inline underline underline-offset-4">Learn more</span>
+            Program launches August 31, 2026 <span className="opacity-50 mx-2">·</span> In-person portion in Arlington, VA <span className="opacity-50 mx-2 hidden md:inline">·</span> <span className="hidden md:inline underline underline-offset-4">Learn more</span>
           </p>
           <ArrowRight className="w-4 h-4 hidden md:inline" />
         </div>
@@ -105,12 +108,12 @@ export default function Home() {
 
           <div className="flex items-center gap-3">
             <a
-              href="https://whop.com/tech-clear/pm-ai-cohort/"
+              href={CONSULT_URL}
               target="_blank"
               rel="noopener noreferrer"
               className={`hidden md:block text-[11px] font-semibold tracking-[0.15em] uppercase border border-zinc-700 px-6 py-3 hover:bg-white hover:text-black hover:border-white transition-all duration-300 rounded-none`}
             >
-              Enroll
+              Book a Call
             </a>
             {/* Hamburger */}
             <button
@@ -152,13 +155,13 @@ export default function Home() {
                 </a>
               ))}
               <a
-                href="https://whop.com/tech-clear/pm-ai-cohort/"
+                href={CONSULT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
                 className="mt-4 text-center text-[11px] font-bold tracking-[0.15em] uppercase border border-white/30 px-6 py-4 text-white hover:bg-white hover:text-black transition-all duration-300"
               >
-                Enroll
+                Book a Call
               </a>
             </div>
           </motion.div>
@@ -253,12 +256,12 @@ export default function Home() {
               <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
             </a>
             <a
-              href="https://whop.com/tech-clear/pm-ai-cohort/"
+              href={CONSULT_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center justify-between sm:justify-start gap-3 border border-white px-7 py-4 md:px-10 md:py-5 font-bold text-[12px] md:text-[13px] tracking-[0.15em] uppercase text-white hover:bg-white hover:text-black transition-all duration-300 rounded-none"
             >
-              Enroll
+              Book a Call
               <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
             </a>
             <a
@@ -279,7 +282,7 @@ export default function Home() {
           >
             <div>
               <p className="text-[10px] md:text-xs font-bold tracking-[0.25em] uppercase text-zinc-400 mb-1.5">Program Launches</p>
-              <p className="font-playfair text-2xl md:text-4xl text-white leading-tight">July 6, 2026</p>
+              <p className="font-playfair text-2xl md:text-4xl text-white leading-tight">August 31, 2026</p>
             </div>
             <div className="hidden sm:block w-px h-12 bg-white/20" />
             <div>
@@ -540,7 +543,7 @@ export default function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
               <div className="border border-white/15 px-5 py-4">
                 <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 mb-2">Program Launches</p>
-                <p className="text-white text-lg font-light">July 6, 2026</p>
+                <p className="text-white text-lg font-light">August 31, 2026</p>
               </div>
               <div className="border border-white/15 px-5 py-4">
                 <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 mb-2">First Cohort Kickoff</p>
@@ -680,7 +683,7 @@ export default function Home() {
                   8 weeks.<br /><span className="italic">One decision.</span>
                 </h3>
                 <p className="text-zinc-400 text-lg font-light mb-3">Enroll to view pricing and secure your spot.</p>
-                <p className="text-zinc-500 text-sm font-light">Program launches July 6, 2026 · In-person portion in Arlington, VA</p>
+                <p className="text-zinc-500 text-sm font-light">Program launches August 31, 2026 · In-person portion in Arlington, VA</p>
               </div>
               <ul className="space-y-4 md:max-w-xs">
                 {["Full 8-week program access", "SAFe SSM 6.0 certification included", "1-on-1 coaching sessions", "Priority support"].map((point) => (

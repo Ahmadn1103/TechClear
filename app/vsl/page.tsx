@@ -1,4 +1,6 @@
-const ENROLL_URL = "https://whop.com/tech-clear/pm-ai-cohort/";
+// Sign-up funnel: the VSL CTAs book a Calendly consultation call with Abdullah
+// Rafiq (he closes on the call) — no direct-to-payment checkout on the site.
+const CONSULT_URL = "https://calendly.com/abdullah-r52/tech-clear-pm-ai-intro-call";
 
 export default function VSLPage() {
   return (
@@ -202,8 +204,8 @@ export default function VSLPage() {
               <a href="#vsl-solution">Our Solution</a>
               <a href="#vsl-flagship">Flagship Program</a>
             </div>
-            <a href={ENROLL_URL} target="_blank" rel="noopener noreferrer" className="vsl-nav-cta">
-              Enroll →
+            <a href={CONSULT_URL} target="_blank" rel="noopener noreferrer" className="vsl-nav-cta">
+              Book a Call →
             </a>
           </nav>
       </div>
@@ -219,7 +221,7 @@ export default function VSLPage() {
         <header className="vsl-wrap vsl-hero">
           <div className="vsl-eyebrow">
             <span className="vsl-dot" />
-            IT Workforce Training · Cohort starts Monday, July 6
+            IT Workforce Training · Cohort starts Monday, August 31
           </div>
           <h1 className="vsl-h1">
             Build with intention.{" "}
@@ -230,8 +232,8 @@ export default function VSLPage() {
             certifications, and mentorship to create impact in a rapidly evolving tech landscape.
           </p>
           <div className="vsl-actions">
-            <a href={ENROLL_URL} target="_blank" rel="noopener noreferrer" className="vsl-btn vsl-btn-primary">
-              Enroll in the Flagship Program →
+            <a href={CONSULT_URL} target="_blank" rel="noopener noreferrer" className="vsl-btn vsl-btn-primary">
+              Book a Free Intro Call →
             </a>
             <a href="#vsl-video" className="vsl-btn vsl-btn-ghost">
               ▶ Watch the overview
@@ -252,8 +254,8 @@ export default function VSLPage() {
 
           {/* Enroll CTA below video */}
           <div style={{ textAlign: "center", marginTop: 32 }}>
-            <a href={ENROLL_URL} target="_blank" rel="noopener noreferrer" className="vsl-btn vsl-btn-primary">
-              Enroll Now →
+            <a href={CONSULT_URL} target="_blank" rel="noopener noreferrer" className="vsl-btn vsl-btn-primary">
+              Book a Call →
             </a>
           </div>
 
@@ -393,15 +395,15 @@ export default function VSLPage() {
                 <li><span className="vsl-ck">✓</span><span>All materials, recordings &amp; private community</span></li>
               </ul>
               <a
-                href={ENROLL_URL}
+                href={CONSULT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="vsl-btn vsl-btn-primary"
                 style={{ width: "100%", boxSizing: "border-box", justifyContent: "center" }}
               >
-                Reserve my seat →
+                Book a call to reserve your seat →
               </a>
-              <div className="vsl-guarantee">Secure checkout via Whop</div>
+              <div className="vsl-guarantee">Book a free intro call — Abdullah walks you through enrollment</div>
             </div>
           </div>
         </section>
@@ -412,7 +414,7 @@ export default function VSLPage() {
             <div className="vsl-label">Logistics</div>
             <h2 className="vsl-h2">The cohort at a glance.</h2>
             <div className="vsl-schedule">
-              <div className="vsl-sched"><div className="k">Start date</div><div className="v">Mon, Jul 6</div></div>
+              <div className="vsl-sched"><div className="k">Start date</div><div className="v">Mon, Aug 31</div></div>
               <div className="vsl-sched"><div className="k">Format</div><div className="v">8 weeks<small>Live + async</small></div></div>
               <div className="vsl-sched"><div className="k">Delivery</div><div className="v">In-Person<small>Arlington, VA</small></div></div>
               <div className="vsl-sched"><div className="k">Seats</div><div className="v">30 max<small>Small-group by design</small></div></div>
@@ -431,7 +433,7 @@ export default function VSLPage() {
               <a href="#vsl-about">About Us</a>
               <a href="#vsl-solution">Our Solution</a>
               <a href="#vsl-flagship">Flagship Program</a>
-              <a href={ENROLL_URL} target="_blank" rel="noopener noreferrer">Enroll</a>
+              <a href={CONSULT_URL} target="_blank" rel="noopener noreferrer">Book a Call</a>
               <a className="vsl-ig" href="https://www.instagram.com/techclear.co" target="_blank" rel="noopener noreferrer">@techclear.co</a>
             </div>
             <p>© {new Date().getFullYear()} TechClear. Built for the world.</p>
