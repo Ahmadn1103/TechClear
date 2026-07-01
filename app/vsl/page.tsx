@@ -21,12 +21,19 @@ export default function VSLPage() {
           --text:#eef2f8;--text-soft:#94a1b5;--line:rgba(255,255,255,.09);
           --accent:#3d9bff;--accent-2:#22d3ee;--accent-soft:rgba(61,155,255,.14);
         }
-        .vsl-body { font-family:'Hanken Grotesk',-apple-system,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden; min-height:100vh; }
+        .vsl-body { font-family:var(--font-hanken),-apple-system,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden; min-height:100vh; }
         .vsl-wrap { max-width:1140px; margin:0 auto; padding:0 26px; position:relative; z-index:2; }
 
         .vsl-glow { position:fixed; border-radius:50%; filter:blur(120px); opacity:.5; pointer-events:none; z-index:0; }
         .vsl-glow-a { top:-160px; right:-120px; width:520px; height:520px; background:radial-gradient(circle,rgba(61,155,255,.5),transparent 70%); }
         .vsl-glow-b { top:560px; left:-180px; width:480px; height:480px; background:radial-gradient(circle,rgba(34,211,238,.32),transparent 70%); }
+        /* blur(120px) over large fixed elements is very expensive to composite on
+           mobile GPUs — shrink the radius/size there to keep first render smooth. */
+        @media(max-width:760px){
+          .vsl-glow { filter:blur(60px); opacity:.4; }
+          .vsl-glow-a { width:300px; height:300px; }
+          .vsl-glow-b { width:280px; height:280px; }
+        }
 
         /* ---------- nav ---------- */
         .vsl-nav-outer { position:fixed; top:0; left:0; right:0; z-index:50; backdrop-filter:blur(12px); background:rgba(10,14,22,.7); border-bottom:1px solid var(--line); }
@@ -189,10 +196,10 @@ export default function VSLPage() {
         }
       `}</style>
 
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       {/* Warm up YouTube connections early so the player + poster load fast on click.
-          s.ytimg.com serves the player base.js — it's on the critical path to playback. */}
+          s.ytimg.com serves the player base.js — it's on the critical path to playback.
+          i.ytimg.com serves the poster thumbnail. Fonts are now self-hosted via
+          next/font (see app/layout.tsx), so no external font requests block paint. */}
       <link rel="preconnect" href="https://www.youtube.com" crossOrigin="anonymous" />
       <link rel="preconnect" href="https://s.ytimg.com" crossOrigin="anonymous" />
       <link rel="preconnect" href="https://i.ytimg.com" crossOrigin="anonymous" />
@@ -201,11 +208,6 @@ export default function VSLPage() {
       <link rel="dns-prefetch" href="https://s.ytimg.com" />
       <link rel="dns-prefetch" href="https://i.ytimg.com" />
       <link rel="dns-prefetch" href="https://googlevideo.com" />
-      {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-      <link
-        href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap"
-        rel="stylesheet"
-      />
 
       {/* Fixed Nav — outside vsl-body so overflow:hidden doesn't trap it */}
       <div className="vsl-nav-outer">

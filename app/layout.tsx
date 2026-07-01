@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Playfair_Display, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
+// Self-hosted (via next/font) so the /vsl page doesn't block first paint on an
+// external Google Fonts stylesheet request. Exposed as a CSS variable.
+const hanken = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-hanken" });
 
 export const metadata: Metadata = {
   title: "TechClear | PM + AI Flagship Program for IT Professionals",
@@ -99,7 +102,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.variable} ${playfair.variable} font-sans bg-black text-[#f4f4f5] antialiased cursor-none`}>
+      <body className={`${inter.variable} ${playfair.variable} ${hanken.variable} font-sans bg-black text-[#f4f4f5] antialiased cursor-none`}>
         <CustomCursor />
         {children}
       </body>
