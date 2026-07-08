@@ -898,7 +898,7 @@ export default function Home() {
                     <option value="bootcamp">PM + AI Flagship Program</option>
                     <option value="enrollment">Enrollment Question</option>
                     <option value="pricing">Pricing & Payment</option>
-                    <option value="cohort">Cohort Schedule / In-person Kickoff</option>
+                    <option value="cohort">Cohort Schedule / Kickoff</option>
                     <option value="curriculum">Curriculum & Certification</option>
                     <option value="partnership">Partnership / Corporate Inquiry</option>
                     <option value="support">Technical Support</option>
@@ -917,7 +917,7 @@ export default function Home() {
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     rows={5}
-                    placeholder="Tell us what you're looking for — a question about the program, pricing, the in-person kickoff, a partnership, or anything else..."
+                    placeholder="Tell us what you're looking for — a question about the program, pricing, the cohort kickoff, a partnership, or anything else..."
                     className="w-full px-6 py-5 border border-white/20 focus:outline-none focus:ring-1 focus:ring-white focus:border-white bg-transparent font-light text-lg rounded-none text-white cursor-none resize-y placeholder:text-zinc-300 placeholder:font-light"
                     disabled={formState === "loading"}
                   />
