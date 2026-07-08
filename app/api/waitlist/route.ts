@@ -7,7 +7,7 @@ const INTEREST_LABELS: Record<string, string> = {
   bootcamp: 'PM + AI Flagship Program',
   enrollment: 'Enrollment Question',
   pricing: 'Pricing & Payment',
-  cohort: 'Cohort Schedule / In-person Kickoff',
+  cohort: 'Cohort Schedule / Kickoff',
   curriculum: 'Curriculum & Certification',
   partnership: 'Partnership / Corporate Inquiry',
   support: 'Technical Support',
