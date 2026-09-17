@@ -238,7 +238,7 @@ export default function VSLPage() {
         <header className="vsl-wrap vsl-hero">
           <div className="vsl-eyebrow">
             <span className="vsl-dot" />
-            IT Workforce Training · Cohort starts Monday, August 31
+            IT Workforce Training · Cohort starting soon
           </div>
           <h1 className="vsl-h1">
             Build with intention.{" "}

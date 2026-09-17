@@ -76,7 +76,7 @@ export default function Home() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-16 py-3 flex items-center justify-center gap-3 md:gap-4 text-center">
           <span className="hidden sm:inline-block text-[10px] font-bold tracking-[0.25em] uppercase border border-black px-2.5 py-1">New</span>
           <p className="text-[11px] md:text-sm font-bold tracking-[0.15em] uppercase">
-            Program launches August 31, 2026 <span className="opacity-50 mx-2">·</span> Fully virtual <span className="opacity-50 mx-2 hidden md:inline">·</span> <span className="hidden md:inline underline underline-offset-4">Learn more</span>
+            Program launching soon <span className="opacity-50 mx-2">·</span> Fully virtual <span className="opacity-50 mx-2 hidden md:inline">·</span> <span className="hidden md:inline underline underline-offset-4">Learn more</span>
           </p>
           <ArrowRight className="w-4 h-4 hidden md:inline" />
         </div>
@@ -282,12 +282,12 @@ export default function Home() {
           >
             <div>
               <p className="text-[10px] md:text-xs font-bold tracking-[0.25em] uppercase text-zinc-400 mb-1.5">Program Launches</p>
-              <p className="font-playfair text-2xl md:text-4xl text-white leading-tight">August 31, 2026</p>
+              <p className="font-playfair text-2xl md:text-4xl text-white leading-tight italic">Soon</p>
             </div>
             <div className="hidden sm:block w-px h-12 bg-white/20" />
             <div>
               <p className="text-[10px] md:text-xs font-bold tracking-[0.25em] uppercase text-zinc-400 mb-1.5">First Cohort Kickoff</p>
-              <p className="font-playfair text-2xl md:text-4xl text-white leading-tight italic">Fully virtual</p>
+              <p className="font-playfair text-2xl md:text-4xl text-white leading-tight">Fully virtual</p>
               <p className="text-sm md:text-base text-zinc-200 font-semibold tracking-wide mt-2">Date to be announced</p>
             </div>
           </motion.div>
@@ -543,7 +543,7 @@ export default function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
               <div className="border border-white/15 px-5 py-4">
                 <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 mb-2">Program Launches</p>
-                <p className="text-white text-lg font-light">August 31, 2026</p>
+                <p className="text-white text-lg font-light">Soon</p>
               </div>
               <div className="border border-white/15 px-5 py-4">
                 <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 mb-2">First Cohort Kickoff</p>
@@ -683,7 +683,7 @@ export default function Home() {
                   8 weeks.<br /><span className="italic">One decision.</span>
                 </h3>
                 <p className="text-zinc-400 text-lg font-light mb-3">Enroll to view pricing and secure your spot.</p>
-                <p className="text-zinc-500 text-sm font-light">Program launches August 31, 2026 · Fully virtual</p>
+                <p className="text-zinc-500 text-sm font-light">Program launching soon · Fully virtual</p>
               </div>
               <ul className="space-y-4 md:max-w-xs">
                 {["Full 8-week program access", "SAFe SSM 6.0 certification included", "1-on-1 coaching sessions", "Priority support"].map((point) => (
